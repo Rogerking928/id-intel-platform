@@ -117,8 +117,11 @@ def construct_validity(indicator: str = "AMR_INFECT_MRSA",
     if len(merged) < 5:
         return {"ok": False, "reason": f"only {len(merged)} countries overlap — "
                 "need more accumulated data", "n": len(merged)}
-    rho = merged["amr_docs"].corr(merged["value"], method="spearman")
-    rho_share = merged["amr_share"].corr(merged["value"], method="spearman")
+    # Spearman rho = Pearson correlation of the ranks. Computing it via ranks
+    # keeps us on pandas alone (pandas' method="spearman" pulls in scipy, which
+    # isn't installed on Streamlit Cloud).
+    rho = merged["amr_docs"].rank().corr(merged["value"].rank())
+    rho_share = merged["amr_share"].rank().corr(merged["value"].rank())
     return {
         "ok": True, "indicator": indicator, "n": len(merged),
         "spearman_volume": round(float(rho), 3),
