@@ -83,6 +83,19 @@ CREATE TABLE IF NOT EXISTS annotations (
     created_at   TEXT NOT NULL
 );
 
+-- External AMR resistance reference data (WHO GHO / GLASS-derived indicators),
+-- used as ground truth for validating the risk score. country-year-indicator.
+CREATE TABLE IF NOT EXISTS amr_reference (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    country_iso3 TEXT NOT NULL,
+    country      TEXT,
+    indicator    TEXT NOT NULL,          -- e.g. AMR_INFECT_MRSA
+    year         INTEGER,
+    value        REAL,                   -- resistance %
+    source       TEXT DEFAULT 'WHO GHO',
+    UNIQUE(country_iso3, indicator, year)
+);
+
 -- Simple log so you can see what each daily run did.
 CREATE TABLE IF NOT EXISTS run_log (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,

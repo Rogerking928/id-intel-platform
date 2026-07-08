@@ -149,6 +149,29 @@ def canonical_country(name: str) -> str:
     return COUNTRY_ALIASES.get(name, name)
 
 
+# ISO-3 codes for the tracked countries, so we can join platform data to the
+# WHO GHO / GLASS AMR reference indicators (which are keyed by ISO-3).
+COUNTRY_ISO3 = {
+    "Taiwan": "TWN", "China": "CHN", "Japan": "JPN", "South Korea": "KOR",
+    "Hong Kong": "HKG", "Singapore": "SGP", "Malaysia": "MYS", "Thailand": "THA",
+    "Vietnam": "VNM", "Philippines": "PHL", "Indonesia": "IDN", "India": "IND",
+    "Pakistan": "PAK", "Bangladesh": "BGD", "Australia": "AUS", "New Zealand": "NZL",
+    "Nepal": "NPL", "Sri Lanka": "LKA", "Myanmar": "MMR", "Cambodia": "KHM",
+    "Laos": "LAO", "Mongolia": "MNG", "United States": "USA", "Canada": "CAN",
+    "Brazil": "BRA", "Mexico": "MEX", "Argentina": "ARG", "Chile": "CHL",
+    "Colombia": "COL", "Peru": "PER", "United Kingdom": "GBR", "France": "FRA",
+    "Germany": "DEU", "Italy": "ITA", "Spain": "ESP", "Greece": "GRC",
+    "Netherlands": "NLD", "Portugal": "PRT", "Poland": "POL", "Sweden": "SWE",
+    "Switzerland": "CHE", "Ireland": "IRL", "Belgium": "BEL", "Turkey": "TUR",
+    "Russia": "RUS", "Saudi Arabia": "SAU", "Iran": "IRN", "Iraq": "IRQ",
+    "Egypt": "EGY", "Israel": "ISR", "United Arab Emirates": "ARE", "Qatar": "QAT",
+    "Kuwait": "KWT", "South Africa": "ZAF", "Nigeria": "NGA", "Kenya": "KEN",
+    "Ethiopia": "ETH", "Ghana": "GHA", "Tanzania": "TZA", "Uganda": "UGA",
+    "Democratic Republic of the Congo": "COD",
+}
+ISO3_TO_COUNTRY = {v: k for k, v in COUNTRY_ISO3.items()}
+
+
 # Study-type keyword hints (used by the classifier)
 STUDY_TYPE_HINTS = {
     "Clinical Trial": ["randomi", "clinical trial", "phase i", "phase ii", "phase iii",

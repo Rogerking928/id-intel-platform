@@ -64,6 +64,13 @@ def main(make_report: bool = False):
     new, seen = collect_all()
     print(f"[collect] done: {new} new documents ({seen} seen)")
 
+    # refresh the WHO GHO / GLASS AMR reference data (ground truth for risk scores)
+    try:
+        from collectors import gho
+        print(f"[reference] WHO GHO AMR indicators: {gho.collect()} data points")
+    except Exception as exc:  # noqa: BLE001
+        print(f"  [reference] GHO refresh failed: {exc}")
+
     print("[extract] running AI extraction + classification + graph ...")
     stats = pipeline.run()
 
