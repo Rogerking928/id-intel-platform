@@ -170,8 +170,11 @@ a planned clinician-annotated extraction benchmark under leakage controls.
 
 ### 2.6 Availability and reproducibility
 VIGIL is open-source (MIT), archived on Zenodo with a DOI, deployed as a public
-live instance, and updated daily at no cost via continuous integration. Code, the
-codebook, and the schema are versioned; a single command reproduces the pipeline.
+live instance (Figure 4), and updated daily at no cost via continuous
+integration. Code, the codebook, and the schema are versioned; a single command
+reproduces the pipeline.
+
+![**Figure 4.** The VIGIL web dashboard (public live instance): daily-updated corpus metrics and highlights, with sidebar access to search, trend, knowledge-graph, forecast, signal, novelty, graph-query, heatmap, risk, and outbreak modules, plus the annotation and benchmark tools.](figure4_dashboard.png)
 
 ## 3. Results
 
@@ -191,7 +194,9 @@ extractor, recovered fine-grained resistance alleles absent from the baseline
 dictionary. Graph queries returned interpretable chains — for example, for
 carbapenem-resistant Enterobacterales the platform linked specific countries,
 carbapenemase genes (e.g. OXA-48, KPC, NDM), and agents (e.g.
-ceftazidime-avibactam), each traceable to the underlying documents.
+ceftazidime-avibactam), each traceable to the underlying documents (Figure 3).
+
+![**Figure 3.** Knowledge-graph neighbourhood of carbapenem-resistant Enterobacterales (CRE) in the corpus: co-occurring countries, resistance genes, antibiotics, and clinical syndromes, each edge traceable to source documents.](figure3_kg.png)
 
 ### 3.3 Preliminary validation
 Across the 23 countries with both a platform AMR signal and a WHO GHO MRSA value,
@@ -204,7 +209,9 @@ reported outbreak), literature signal did not discriminate outbreak-affected
 countries (rank-AUC = 0.16); reported outbreaks concentrated in low-literature,
 lower-resource settings. These proof-of-concept results are preliminary and are
 expected to sharpen as the corpus accumulates, but they already demonstrate the
-platform's ability to make the surveillance gap explicit and measurable.
+platform's ability to make the surveillance gap explicit and measurable (Figure 2).
+
+![**Figure 2.** Construct validity: per-country VIGIL platform AMR share versus WHO GHO measured MRSA bloodstream-infection resistance (%), across 23 countries. Raw document volume is essentially uncorrelated with measured resistance (Spearman ρ = 0.06); the publication-normalised AMR share shows a weak positive association (ρ = 0.28).](figure2_validation.png)
 
 ## 4. Discussion
 VIGIL complements, rather than duplicates, existing open-source
