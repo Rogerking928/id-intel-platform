@@ -2,36 +2,39 @@
 
 **Author: Yen-Hsiang Wang, MD, MSc**
 
-一個以 **AI 為核心**、每天自動收集並分析全球感染症與抗藥性資訊的平台。
-它不是新聞聚合器，而是會**自動萃取結構化資訊、分類、建立知識關聯、產生趨勢分析與週報**，
-並且每一筆資料都保留原文與模型輸出，可直接支援後續研究與論文（Paper 1：LLM AMR 萃取 benchmark）。
+An **AI-driven** platform that automatically collects and analyses global infectious-disease
+and antimicrobial-resistance (AMR) information every day. It is not a news aggregator — it
+**extracts structured information, classifies it, builds knowledge relationships, and generates
+trend analyses and weekly reports**, keeping the raw text and every model output so it can also
+support downstream research and publication (Paper 1: an LLM AMR-extraction benchmark).
 
-> 完全使用免費、開源工具。不需要信用卡。沒有 AI 金鑰也能完整運作（離線 rule-based 萃取）。
+> Built entirely on free, open-source tools. No credit card required. It runs fully without any
+> AI key (offline rule-based extraction); adding a free Gemini key upgrades the extraction.
 
 ---
 
-## 這個平台會做什麼（對應你的需求）
+## What it does (mapped to the requirements)
 
-| 你的需求 | 對應功能 | 檔案 |
+| Requirement | Feature | Location |
 |---|---|---|
-| 每天自動收集 WHO / CDC / ECDC / PubMed / ClinicalTrials / GLASS | 6 個 collector | `collectors/` |
-| AI 自動萃取（病原體、國家、抗生素、抗藥基因、研究類型、摘要…） | rule-based（永遠可用）+ Gemini（可選） | `extract/` |
-| AI 自動分類成 8 類事件 | 分類器 | `extract/rule_based.py` |
-| 知識關聯（Pathogen → Country → Gene → Antibiotic …） | entities + relations 表 | `db.py`, 知識圖頁面 |
-| AI 趨勢分析（最近討論最多／上升最快／哪些國家…） | 由 LLM 或模板產生 | `analysis/trends.py` |
-| 網站 Dashboard（Today / Trend / Latest …） | Streamlit 多頁面 | `app/` |
-| 搜尋（病原體／國家／抗生素／基因／日期／事件類型） | 搜尋頁 | `app/pages/1_*.py` |
-| AI 週報（可輸出 Markdown / PDF） | 週報產生器 | `analysis/weekly_report.py` |
+| Daily collection from WHO / CDC / ECDC / PubMed / ClinicalTrials / GLASS | 6 collectors | `collectors/` |
+| AI extraction (pathogen, country, antibiotic, resistance gene, study type, summary…) | rule-based (always on) + Gemini (optional) | `extract/` |
+| AI classification into 8 event categories | classifier | `extract/rule_based.py` |
+| Knowledge relationships (Pathogen → Country → Gene → Antibiotic …) | entities + relations tables | `db.py`, Knowledge Graph page |
+| AI trend analysis (most-discussed / fastest-rising / which countries…) | LLM- or template-generated | `analysis/trends.py` |
+| Web dashboard (Today / Trend / Latest …) | multi-page Streamlit app | `app/` |
+| Search (pathogen / country / antibiotic / gene / date / event type) | search page | `app/pages/1_*.py` |
+| AI weekly report (Markdown / PDF export) | report generator | `analysis/weekly_report.py` |
 
 ---
 
-## 一、安裝（只需做一次）
+## 1. Install (one-time)
 
-你需要先安裝 **Python 3.10 以上**。以下擇一：
+You need **Python 3.10+**. Pick one path:
 
-### 方法 A —— Windows（最簡單，建議初學者用這個）
+### Option A — Windows (simplest, recommended for beginners)
 
-打開「PowerShell」，逐行貼上：
+Open **PowerShell** and paste line by line:
 
 ```powershell
 cd C:\Users\roger\Desktop\id-intel-platform
@@ -40,127 +43,137 @@ py -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 方法 B —— WSL / Linux
+### Option B — WSL / Linux
 
 ```bash
 cd /mnt/c/Users/roger/Desktop/id-intel-platform
-# 若 venv 可用：
+# if venv is available:
 python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
-# 若出現 "ensurepip is not available"，改用這一行即可：
+# if you see "ensurepip is not available", use this instead:
 pip install --user --break-system-packages -r requirements.txt
 ```
 
 ---
 
-## 二、每天更新資料（收集 + AI 萃取）
+## 2. Update the data daily (collect + AI extraction)
 
 ```bash
-python run_daily.py            # 收集所有來源、AI 萃取、建立知識圖
-python run_daily.py --report   # 同上，並且產生本週週報
+python run_daily.py            # collect all sources, run AI extraction, build the knowledge graph
+python run_daily.py --report   # same, plus generate the weekly report
 ```
 
-第一次執行會抓比較多歷史資料（尤其 CDC），之後每天只會新增新資料（自動去重）。
+The first run pulls more history (especially CDC); after that each run only adds new items
+(automatic de-duplication).
 
-想控制抓取量（跑快一點）可以加環境變數，例如：
+To control volume (run faster), pass environment variables, e.g.:
 ```bash
 PUBMED_MAX_PER_QUERY=10 WHO_MAX_ITEMS=15 python run_daily.py
 ```
 
 ---
 
-## 三、打開網站 Dashboard
+## 3. Open the web dashboard
 
 ```bash
 streamlit run app/Home.py
 ```
 
-瀏覽器會自動打開 `http://localhost:8501`。左側 sidebar 有五個頁面：
+Your browser opens `http://localhost:8501`. The sidebar has five pages:
 
-- **Home** — Today's highlights、30 天趨勢圖、Latest publications / trials / guidelines
-- **🔎 Search** — 依病原體／國家／抗生素／基因／事件類型／日期查詢，可下載 CSV
-- **📈 Trends** — AI 趨勢分析、上升最快、時間趨勢圖
-- **🕸️ Knowledge Graph** — 選一個病原體，看它連到的國家／基因／抗生素／疾病
-- **📰 Weekly Report** — 一鍵產生週報，下載 Markdown 或 HTML（用瀏覽器列印成 PDF）
+- **Home** — today's highlights, 30-day trend charts, latest publications / trials / guidelines
+- **🔎 Search** — filter by pathogen / country / antibiotic / gene / event type / date; export CSV
+- **📈 Trends** — AI trend analysis, fastest rising, time-series charts
+- **🕸️ Knowledge Graph** — pick a pathogen, see the countries / genes / antibiotics / diseases it connects to
+- **📰 Weekly Report** — one click to generate the report; download Markdown or HTML (print to PDF)
 
 ---
 
-## 四、AI 功能（Gemini）—— 已啟用
+## 4. AI features (Gemini) — enabled
 
-平台**永遠**會跑免費、離線的規則式萃取。若 `.env` 裡有 `GEMINI_API_KEY`，就會**額外**跑一次 Gemini
-萃取，並把它設為 search / 知識圖 / 趨勢分析採用的版本。
+The platform **always** runs the free, offline rule-based extractor. If `.env` contains a
+`GEMINI_API_KEY`, it **additionally** runs a Gemini extraction and makes that the version used by
+search / knowledge graph / trend analysis.
 
-- 申請金鑰：<https://aistudio.google.com/apikey>（Google 帳號登入，免信用卡）。點 **Create API key**，
-  複製那把金鑰（新版金鑰是 `AQ.` 開頭，舊版是 `AIza` 開頭，兩種都可以）。
-- 把金鑰貼進 `.env`（本專案已內建 `.env` 自動載入，**不需要**再打 `source .env`）：
+- Get a key: <https://aistudio.google.com/apikey> (sign in with Google, no credit card). Click
+  **Create API key** and copy it (new keys start with `AQ.`, older ones with `AIza`; both work).
+- Paste it into `.env` (this project auto-loads `.env`, so you do **not** need `source .env`):
   ```
-  GEMINI_API_KEY=你的金鑰
+  GEMINI_API_KEY=your_key
   GEMINI_MODEL=gemini-2.5-flash
   ```
-- 然後照常 `python run_daily.py` 就會自動開啟 AI。
+- Then run `python run_daily.py` as usual and AI turns on automatically.
 
-**免費額度節流（重要）**：免費 tier 每分鐘請求數有限，所以每次執行預設只對 `GEMINI_MAX_PER_RUN=50`
-篇做 LLM 萃取，且每次呼叫間隔 `GEMINI_MIN_INTERVAL=4.5` 秒。要一次跑多一點就調高上限，例如：
+**Free-tier throttling (important):** the free tier limits requests per minute, so each run
+processes at most `GEMINI_MAX_PER_RUN=50` documents with an LLM extraction, spaced by
+`GEMINI_MIN_INTERVAL=4.5` seconds. Raise the cap to do more at once:
 ```bash
 GEMINI_MAX_PER_RUN=200 python run_daily.py
 ```
-每天排程執行就會慢慢把整個資料庫補完。每篇資料會**同時**保留規則式與 Gemini 兩種萃取結果 ——
-這正是 Paper 1 要比較的模型資料（實測 Gemini 能抓到 KPC-234、NDM-1、質體型別等規則式漏掉的細節）。
+Scheduling it daily works through the backlog over time. Every document keeps **both** the
+rule-based and Gemini extractions — exactly the model-comparison data Paper 1 needs (in testing,
+Gemini captured details the rule-based extractor missed, e.g. `KPC-234`, `NDM-1`, plasmid types).
 
 ---
 
-## 五、讓它每天自動跑（排程）
+## 5. Run it automatically every day
 
-**WSL / Linux（cron）** — 每天早上 7 點：
+**WSL / Linux (cron)** — 07:00 every day:
 ```
 0 7 * * * cd /mnt/c/Users/roger/Desktop/id-intel-platform && /usr/bin/python3 run_daily.py --report >> data/cron.log 2>&1
 ```
-用 `crontab -e` 貼上。
+Add it with `crontab -e`.
 
-**Windows（工作排程器 Task Scheduler）**：建立一個每日任務，
-程式填 `py`，引數填 `run_daily.py --report`，開始位置填專案資料夾。
+**Windows (Task Scheduler):** create a daily task — program `py`, arguments
+`run_daily.py --report`, start-in set to the project folder.
+
+**Free cloud (GitHub Actions):** `.github/workflows/daily.yml` is included. Push the repo to
+GitHub, add `GEMINI_API_KEY` under Settings → Secrets and variables → Actions, and it runs daily
+in the cloud (even when your computer is off), committing the refreshed database back to the repo.
 
 ---
 
-## 專案結構
+## Project structure
 
 ```
 id-intel-platform/
-├─ run_daily.py          # ★ 一鍵：收集→萃取→分類→知識圖（可排程）
-├─ config.py             # 所有設定（要追蹤的病原體、查詢字串、抓取量…）
-├─ db.py                 # SQLite 資料庫（documents / extractions / entities / relations / annotations）
+├─ run_daily.py          # ★ one command: collect → extract → classify → knowledge graph (schedulable)
+├─ config.py             # all settings (pathogens to track, queries, volume limits…)
+├─ db.py                 # SQLite database (documents / extractions / entities / relations / annotations)
 ├─ requirements.txt
-├─ .env.example          # 可選金鑰設定範本
-├─ collectors/           # 六個資料來源
-│  ├─ pubmed.py  clinicaltrials.py  who.py  rss.py(CDC/ECDC)  glass.py
-├─ extract/              # AI 萃取
-│  ├─ dictionaries.py    # 受控詞彙（病原體/抗生素/抗藥基因/國家）＝ Paper 1 codebook
-│  ├─ rule_based.py      # 規則式萃取（永遠可用，也是論文 baseline）
-│  ├─ llm.py             # Gemini 萃取（可選）
-│  └─ pipeline.py        # 萃取流程 + 知識圖建立
+├─ .env.example          # optional key template
+├─ collectors/           # six data sources
+│  ├─ pubmed.py  clinicaltrials.py  who.py  rss.py (CDC/ECDC)  glass.py
+├─ extract/              # AI extraction
+│  ├─ dictionaries.py    # controlled vocabularies (pathogen/antibiotic/gene/country) = Paper 1 codebook
+│  ├─ rule_based.py      # rule-based extractor (always on; also the paper's baseline)
+│  ├─ llm.py             # Gemini extractor (optional)
+│  └─ pipeline.py        # extraction flow + knowledge-graph build
 ├─ analysis/
-│  ├─ trends.py          # 趨勢分析（含 AI 敘述）
-│  └─ weekly_report.py   # 週報（Markdown + HTML）
-├─ app/                  # Streamlit 網站
+│  ├─ trends.py          # trend analysis (incl. AI narrative)
+│  └─ weekly_report.py   # weekly report (Markdown + HTML)
+├─ app/                  # Streamlit web app
 │  ├─ Home.py  common.py  pages/…
-├─ data/                 # SQLite 檔（自動建立）
-└─ reports/              # 產出的週報
+├─ data/                 # SQLite file (auto-created)
+└─ reports/              # generated weekly reports
 ```
 
 ---
 
-## 這個平台如何支援你的論文（Paper 1）
+## How this supports the research (Paper 1)
 
-每一筆資料都保留：**原文 raw_text + 來源 + URL + 抓取時間 + 模型名稱/版本/prompt 版本/原始輸出**。
-`annotations` 資料表用來存放你（與第二位標註者）的 gold-standard 標註，之後可計算
-per-field F1、macro-F1、κ，比較規則式 vs 免費 LLM 在 CRE/VRE/MRSA 萃取上的表現。
+Every document keeps: **raw_text + source + URL + fetch time + model name/version/prompt version/raw
+output**. The `annotations` table holds your (and a second annotator's) gold-standard labels, so you
+can later compute per-field F1, macro-F1, and κ, comparing rule-based vs a free LLM on AMR extraction
+for CRE / VRE / MRSA.
 
-> ⚠️ 為避免 data leakage：先凍結 `extract/dictionaries.py`（codebook）與 schema，
-> **再**去看模型輸出與做標註。
+> ⚠️ To avoid data leakage: freeze `extract/dictionaries.py` (the codebook) and the schema **before**
+> looking at model outputs and annotating.
 
 ---
 
-## 之後可以擴充（不是第一版）
+## Roadmap (beyond the MVP)
 
-Neo4j 真正的知識圖、AI 預測趨勢/研究熱點、各國 Guideline 差異比較、
-全球抗藥性互動地圖、對外提供研究者 API、系統性回顧自動整理。
-目前架構（collector → extractor → entities/relations → analysis → app）已經預留這些接口。
+A true Neo4j knowledge graph, AI trend/hotspot forecasting, cross-country guideline comparison, an
+interactive global AMR map, a public research API, and automated systematic-review support. The
+current architecture (collector → extractor → entities/relations → analysis → app) already leaves
+room for these.
