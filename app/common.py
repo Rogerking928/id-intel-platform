@@ -31,7 +31,7 @@ DATE_EXPR = "COALESCE(NULLIF(d.published_date,''), substr(d.fetched_at,1,10))"
 
 
 def page_setup(title: str, icon: str = "🦠"):
-    st.set_page_config(page_title=f"ID-Intel · {title}", page_icon=icon, layout="wide")
+    st.set_page_config(page_title=f"AMR Intelligence · {title}", page_icon=icon, layout="wide")
 
 
 @st.cache_data(ttl=300)
