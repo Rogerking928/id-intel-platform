@@ -26,6 +26,12 @@ support downstream research and publication (Paper 1: an LLM AMR-extraction benc
 | Search (pathogen / country / antibiotic / gene / date / event type) | search page | `app/pages/1_*.py` |
 | AI weekly report (Markdown / PDF export) | report generator | `analysis/weekly_report.py` |
 | Prediction prototype (forecast a pathogen's next-N-weeks discussion volume) | transparent linear baseline + backtest | `analysis/forecast.py`, Forecast page |
+| Trend signals — growth rate % + emerging-signal detection | | `analysis/signals.py`, Signals page |
+| Novelty detection — first-ever entity combinations (gene+pathogen+country) | | `analysis/novelty.py`, Novelty page |
+| Knowledge-graph multi-hop queries ("which countries newly show X?") | | `analysis/graph_query.py`, Graph Query page |
+| Global AMR heatmap (world choropleth) | | Heatmap page |
+| Validation-first country risk score | vs WHO GHO / GLASS ground truth | `analysis/risk.py`, Risk page |
+| AMR resistance ground truth (auto-fetched, 101 countries, 2016–2023) | WHO GHO / GLASS indicators | `collectors/gho.py` |
 
 ---
 
