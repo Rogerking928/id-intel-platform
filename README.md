@@ -25,6 +25,7 @@ support downstream research and publication (Paper 1: an LLM AMR-extraction benc
 | Web dashboard (Today / Trend / Latest …) | multi-page Streamlit app | `app/` |
 | Search (pathogen / country / antibiotic / gene / date / event type) | search page | `app/pages/1_*.py` |
 | AI weekly report (Markdown / PDF export) | report generator | `analysis/weekly_report.py` |
+| Prediction prototype (forecast a pathogen's next-N-weeks discussion volume) | transparent linear baseline + backtest | `analysis/forecast.py`, Forecast page |
 
 ---
 
