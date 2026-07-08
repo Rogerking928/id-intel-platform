@@ -1,12 +1,13 @@
 # VIGIL: an open, automatically-updating platform for global antimicrobial-resistance and infectious-disease intelligence from open-source text
 
-> **DRAFT preprint (resource descriptor).** Before posting: (1) fill affiliation
-> and ORCID; (2) regenerate the numbers below from the live platform (they update
-> daily); (3) complete the reference list. Numbers here are from a snapshot of
-> **2,075 documents**.
+> **DRAFT preprint (resource descriptor).** Before posting: (1) regenerate the
+> numbers below from the live platform (they update daily); (2) complete the
+> reference list. Numbers here are from a snapshot of **2,075 documents**.
 
-**Author.** Yen-Hsiang Wang, MD, MSc¹ · rogerwang890928@gmail.com · ORCID: __________
-¹ _[Affiliation — fill in]_
+**Author.** Yen-Hsiang Wang, MD, MSc¹ · rogerwang890928@gmail.com ·
+ORCID: [0000-0003-0307-8447](https://orcid.org/0000-0003-0307-8447)
+¹ Graduate Institute of Medical Sciences, College of Medicine, Taipei Medical
+University, Taipei 11031, Taiwan.
 
 **Availability.** Code: https://github.com/Rogerking928/id-intel-platform ·
 Archive/DOI: https://doi.org/10.5281/zenodo.21263882 ·
