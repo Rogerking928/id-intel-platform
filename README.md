@@ -1,5 +1,7 @@
 # 🦠 Global AMR & Infectious Disease Intelligence Platform
 
+**Author: Yen-Hsiang Wang, MD, MSc**
+
 一個以 **AI 為核心**、每天自動收集並分析全球感染症與抗藥性資訊的平台。
 它不是新聞聚合器，而是會**自動萃取結構化資訊、分類、建立知識關聯、產生趨勢分析與週報**，
 並且每一筆資料都保留原文與模型輸出，可直接支援後續研究與論文（Paper 1：LLM AMR 萃取 benchmark）。

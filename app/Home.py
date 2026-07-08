@@ -14,6 +14,8 @@ page_setup("Dashboard")
 st.title("🦠 Global AMR & Infectious Disease Intelligence")
 st.caption("An AI platform that collects, extracts, and analyses open-source "
            "infectious-disease & antimicrobial-resistance information every day.")
+st.markdown("<div style='color:#0b7285;font-weight:600;margin-top:-6px'>"
+            "Yen-Hsiang Wang, MD, MSc</div>", unsafe_allow_html=True)
 
 run = latest_run()
 if run:
