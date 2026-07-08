@@ -11,8 +11,10 @@ from common import (page_setup, get_overview, get_top, get_rising,
 
 page_setup("Dashboard")
 
-st.title("🦠 Global AMR & Infectious Disease Intelligence")
-st.caption("An AI platform that collects, extracts, and analyses open-source "
+st.title("🛡️ VIGIL")
+st.subheader("Global AMR & Infectious Disease Intelligence")
+st.caption("Vigilance Intelligence for Global Infectious-disease & resistance Landscape — "
+           "an AI platform that collects, extracts, and analyses open-source "
            "infectious-disease & antimicrobial-resistance information every day.")
 st.markdown("<div style='color:#0b7285;font-weight:600;margin-top:-6px'>"
             "Yen-Hsiang Wang, MD, MSc"

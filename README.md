@@ -1,4 +1,6 @@
-# 🦠 Global AMR & Infectious Disease Intelligence Platform
+# 🛡️ VIGIL — Global AMR & Infectious Disease Intelligence Platform
+
+_**V**igilance **I**ntelligence for **G**lobal **I**nfectious-disease & resistance **L**andscape_
 
 **Author: Yen-Hsiang Wang, MD, MSc** · rogerwang890928@gmail.com
 
