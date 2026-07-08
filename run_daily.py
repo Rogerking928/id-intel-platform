@@ -18,14 +18,16 @@ import traceback
 from datetime import date
 
 import db
-from collectors import pubmed, clinicaltrials, who, rss, glass
+from collectors import pubmed, clinicaltrials, who, rss, glass, europepmc
 from extract import pipeline
 
 COLLECTORS = [
     ("WHO", who.collect),
     ("CDC", rss.collect_cdc),
     ("ECDC", rss.collect_ecdc),
+    ("UKHSA", rss.collect_ukhsa),
     ("PubMed", pubmed.collect),
+    ("Preprint", europepmc.collect),
     ("ClinicalTrials", clinicaltrials.collect),
     ("GLASS", glass.collect),
 ]

@@ -59,3 +59,7 @@ def collect_cdc() -> list[dict]:
 
 def collect_ecdc() -> list[dict]:
     return _collect_feeds("ECDC", config.ECDC_FEEDS)
+
+
+def collect_ukhsa() -> list[dict]:
+    return _collect_feeds("UKHSA", config.UKHSA_FEEDS)

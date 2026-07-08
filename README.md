@@ -17,7 +17,7 @@ support downstream research and publication (Paper 1: an LLM AMR-extraction benc
 
 | Requirement | Feature | Location |
 |---|---|---|
-| Daily collection from WHO / CDC / ECDC / PubMed / ClinicalTrials / GLASS | 6 collectors | `collectors/` |
+| Daily collection from WHO / CDC / ECDC / UKHSA / PubMed / bioRxiv+medRxiv / ClinicalTrials / GLASS | 8 collectors | `collectors/` |
 | AI extraction (pathogen, country, antibiotic, resistance gene, study type, summary…) | rule-based (always on) + Gemini (optional) | `extract/` |
 | AI classification into 8 event categories | classifier | `extract/rule_based.py` |
 | Knowledge relationships (Pathogen → Country → Gene → Antibiotic …) | entities + relations tables | `db.py`, Knowledge Graph page |
@@ -142,8 +142,9 @@ id-intel-platform/
 ├─ db.py                 # SQLite database (documents / extractions / entities / relations / annotations)
 ├─ requirements.txt
 ├─ .env.example          # optional key template
-├─ collectors/           # six data sources
-│  ├─ pubmed.py  clinicaltrials.py  who.py  rss.py (CDC/ECDC)  glass.py
+├─ collectors/           # eight data sources
+│  ├─ pubmed.py  europepmc.py (bioRxiv/medRxiv)  clinicaltrials.py
+│  ├─ who.py  rss.py (CDC/ECDC/UKHSA)  glass.py
 ├─ extract/              # AI extraction
 │  ├─ dictionaries.py    # controlled vocabularies (pathogen/antibiotic/gene/country) = Paper 1 codebook
 │  ├─ rule_based.py      # rule-based extractor (always on; also the paper's baseline)

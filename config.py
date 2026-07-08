@@ -81,6 +81,7 @@ PUBMED_MAX_PER_QUERY = int(os.getenv("PUBMED_MAX_PER_QUERY", "40"))
 PUBMED_LOOKBACK_DAYS = int(os.getenv("PUBMED_LOOKBACK_DAYS", "30"))
 CT_MAX_STUDIES = int(os.getenv("CT_MAX_STUDIES", "40"))
 WHO_MAX_ITEMS = int(os.getenv("WHO_MAX_ITEMS", "30"))
+EUROPEPMC_MAX = int(os.getenv("EUROPEPMC_MAX", "25"))  # preprints per query
 
 # ---------------------------------------------------------------------------
 # PubMed search queries. Each becomes a separate esearch call.
@@ -94,6 +95,15 @@ PUBMED_QUERIES = [
     "Candida auris",
     "antimicrobial resistance surveillance",
     "NDM OR KPC OR OXA-48 carbapenemase",
+]
+
+# Europe PMC preprint (bioRxiv/medRxiv) search terms
+EUROPEPMC_QUERIES = [
+    "carbapenem resistance",
+    "vancomycin-resistant enterococcus",
+    "methicillin-resistant Staphylococcus aureus",
+    "antimicrobial resistance surveillance",
+    "Candida auris",
 ]
 
 # ClinicalTrials.gov search terms
@@ -124,6 +134,12 @@ CDC_FEEDS = [
 ECDC_FEEDS = [
     # ECDC news / communicable disease threats
     "https://www.ecdc.europa.eu/en/taxonomy/term/2942/feed",
+]
+
+UKHSA_FEEDS = [
+    # UK Health Security Agency news & guidance, via the GOV.UK Atom feed
+    "https://www.gov.uk/search/news-and-communications.atom"
+    "?organisations%5B%5D=uk-health-security-agency",
 ]
 
 # Regions used for the "which regions are lighting up" analysis.
