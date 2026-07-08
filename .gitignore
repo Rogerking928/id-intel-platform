@@ -7,3 +7,6 @@ data/cron.log
 reports/*.html
 reports/*.md
 .DS_Store
+
+# committed snapshot so the deployed site has data
+!data/id_intel.db

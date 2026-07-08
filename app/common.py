@@ -1,4 +1,5 @@
 """Shared helpers for the Streamlit pages (path setup + cached queries)."""
+import os
 import sys
 from datetime import date, timedelta
 from pathlib import Path
@@ -10,6 +11,18 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+
+# On Streamlit Community Cloud there is no .env file; keys are provided via the
+# app's "Secrets" box (st.secrets). Bridge them into the environment BEFORE
+# importing config, so the Gemini key (if you add one) is picked up. Everything
+# still works with no key at all — the LLM narrative just falls back to a
+# template.
+try:
+    for _k in ("GEMINI_API_KEY", "GEMINI_MODEL", "NCBI_API_KEY"):
+        if _k in st.secrets and not os.environ.get(_k):
+            os.environ[_k] = str(st.secrets[_k])
+except Exception:
+    pass  # no secrets configured — fine
 
 import db  # noqa: E402
 from analysis import trends  # noqa: E402
