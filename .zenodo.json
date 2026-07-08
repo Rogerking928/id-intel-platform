@@ -1,0 +1,18 @@
+{
+  "title": "VIGIL — Global AMR & Infectious Disease Intelligence Platform",
+  "description": "An AI-driven platform that automatically collects, extracts, classifies, and analyses global antimicrobial-resistance (AMR) and infectious-disease information from open sources (WHO, CDC, ECDC, UKHSA, PubMed, bioRxiv/medRxiv, ClinicalTrials.gov, WHO GHO/GLASS). It provides structured information extraction, a knowledge graph, trend and emerging-signal detection, forecasting, novelty detection, and a validation-first risk framework benchmarked against WHO GLASS resistance data.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "MIT",
+  "creators": [
+    { "name": "Wang, Yen-Hsiang" }
+  ],
+  "keywords": [
+    "antimicrobial resistance",
+    "infectious disease surveillance",
+    "large language models",
+    "information extraction",
+    "knowledge graph",
+    "early warning"
+  ]
+}

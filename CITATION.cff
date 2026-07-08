@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use VIGIL in your research, please cite it as below."
+title: "VIGIL — Global AMR & Infectious Disease Intelligence Platform"
+abstract: >-
+  An AI-driven platform that automatically collects, extracts, classifies, and
+  analyses global antimicrobial-resistance (AMR) and infectious-disease
+  information from open sources (WHO, CDC, ECDC, UKHSA, PubMed, bioRxiv/medRxiv,
+  ClinicalTrials.gov, WHO GHO/GLASS). It provides structured information
+  extraction, a knowledge graph, trend and emerging-signal detection,
+  forecasting, novelty detection, and a validation-first risk framework
+  benchmarked against WHO GLASS resistance data.
+type: software
+authors:
+  - family-names: Wang
+    given-names: Yen-Hsiang
+    email: rogerwang890928@gmail.com
+    # orcid: "https://orcid.org/0000-0000-0000-0000"   # <- add your ORCID here (free at orcid.org)
+version: "1.0.0"
+date-released: "2026-07-08"
+license: MIT
+repository-code: "https://github.com/Rogerking928/id-intel-platform"
+url: "https://id-intel-platform-4gkpazd4mhtj2upak5pzm9.streamlit.app/"
+keywords:
+  - antimicrobial resistance
+  - infectious disease surveillance
+  - large language models
+  - information extraction
+  - knowledge graph
+  - early warning
+# doi: "10.5281/zenodo.XXXXXXX"   # <- fill in after Zenodo mints your DOI

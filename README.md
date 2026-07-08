@@ -4,6 +4,44 @@ _**V**igilance **I**ntelligence for **G**lobal **I**nfectious-disease & resistan
 
 **Author: Yen-Hsiang Wang, MD, MSc** · rogerwang890928@gmail.com
 
+## How to cite
+
+If you use VIGIL in your research, please cite it. A permanent DOI is issued via
+Zenodo (see "Getting a DOI" below); until then, cite the repository.
+
+> Wang Y-H. *VIGIL — Global AMR & Infectious Disease Intelligence Platform.*
+> 2026. Available from: https://github.com/Rogerking928/id-intel-platform
+> (DOI: 10.5281/zenodo.XXXXXXX)
+
+**BibTeX**
+
+```bibtex
+@software{wang2026vigil,
+  author    = {Wang, Yen-Hsiang},
+  title     = {{VIGIL --- Global AMR \& Infectious Disease Intelligence Platform}},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {1.0.0},
+  doi       = {10.5281/zenodo.XXXXXXX},
+  url       = {https://github.com/Rogerking928/id-intel-platform}
+}
+```
+
+_(Replace `10.5281/zenodo.XXXXXXX` with the DOI Zenodo issues for your release.)_
+
+### Getting a DOI (free, ~5 minutes)
+
+1. Go to <https://zenodo.org> and sign in **with GitHub**; authorise access.
+2. Open the **GitHub** tab in Zenodo, find `id-intel-platform`, and flip its
+   toggle **ON**.
+3. Back on GitHub, create a **Release** (e.g. tag `v1.0.0`). Zenodo automatically
+   archives it and mints a DOI.
+4. Copy the DOI from Zenodo and paste it into `CITATION.cff`, this README, and
+   the BibTeX entry above. GitHub will then show a **"Cite this repository"**
+   button using `CITATION.cff`.
+
+
+
 An **AI-driven** platform that automatically collects and analyses global infectious-disease
 and antimicrobial-resistance (AMR) information every day. It is not a news aggregator — it
 **extracts structured information, classifies it, builds knowledge relationships, and generates
