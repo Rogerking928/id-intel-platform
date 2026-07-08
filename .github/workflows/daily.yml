@@ -1,0 +1,56 @@
+# Daily automatic update — runs in GitHub's cloud, for FREE, even when your
+# own computer is off. It collects new data, runs AI extraction, and commits
+# the refreshed database back to the repo so the public Streamlit site updates.
+#
+# Setup (one-time):
+#   1. Push this project to a GitHub repository.
+#   2. In the repo: Settings -> Secrets and variables -> Actions -> New secret
+#        Name:  GEMINI_API_KEY     Value: <your Gemini key>
+#   3. That's it. It runs every day on the schedule below; you can also trigger
+#      it by hand from the repo's "Actions" tab ("Run workflow").
+name: daily-update
+
+on:
+  schedule:
+    - cron: "0 23 * * *"   # 23:00 UTC = 07:00 Taiwan time, every day
+  workflow_dispatch: {}      # lets you run it manually from the Actions tab
+
+# allow the job to push the updated database back to the repo
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    concurrency:
+      group: daily-update
+      cancel-in-progress: false
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily collection + AI extraction + weekly report
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-2.5-flash
+          # keep within Gemini free-tier limits per run
+          GEMINI_MAX_PER_RUN: "80"
+          GEMINI_MIN_INTERVAL: "4.5"
+        run: python run_daily.py --report
+
+      - name: Commit refreshed database + report
+        run: |
+          git config user.name  "id-intel-bot"
+          git config user.email "actions@github.com"
+          git add -f data/id_intel.db reports/*.md reports/*.html || true
+          git commit -m "auto: daily data update ($(date -u +%F))" || echo "nothing to commit"
+          git push || echo "nothing to push"

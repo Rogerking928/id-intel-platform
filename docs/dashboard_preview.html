@@ -1,0 +1,409 @@
+<title>AMR & Infectious Disease Intelligence — Console</title>
+<style>
+  :root{
+    --bg:#eef2f3; --panel:#ffffff; --panel-2:#f6f9fa; --ink:#0f1f22; --ink-2:#41585c;
+    --hair:#d5e0e2; --hair-2:#e6edee;
+    --accent:#0b7285; --accent-ink:#095c6b; --accent-wash:#e2f2f4;
+    --rise:#c2410c; --rise-wash:#fbe8dd; --crit:#b4232a; --crit-wash:#f8e3e3;
+    --good:#26734a; --good-wash:#e0efe6;
+    --shadow:0 1px 2px rgba(16,40,45,.06),0 6px 20px rgba(16,40,45,.05);
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0a1214; --panel:#101c1f; --panel-2:#0c1618; --ink:#e7f0f1; --ink-2:#93a8ac;
+      --hair:#1e3034; --hair-2:#182629;
+      --accent:#3fb6c9; --accent-ink:#7fd4e1; --accent-wash:#0f2c31;
+      --rise:#f97a45; --rise-wash:#2c1810; --crit:#e2686c; --crit-wash:#2c1517;
+      --good:#5cc088; --good-wash:#122619;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0a1214; --panel:#101c1f; --panel-2:#0c1618; --ink:#e7f0f1; --ink-2:#93a8ac;
+    --hair:#1e3034; --hair-2:#182629;
+    --accent:#3fb6c9; --accent-ink:#7fd4e1; --accent-wash:#0f2c31;
+    --rise:#f97a45; --rise-wash:#2c1810; --crit:#e2686c; --crit-wash:#2c1517;
+    --good:#5cc088; --good-wash:#122619;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --bg:#eef2f3; --panel:#ffffff; --panel-2:#f6f9fa; --ink:#0f1f22; --ink-2:#41585c;
+    --hair:#d5e0e2; --hair-2:#e6edee;
+    --accent:#0b7285; --accent-ink:#095c6b; --accent-wash:#e2f2f4;
+    --rise:#c2410c; --rise-wash:#fbe8dd; --crit:#b4232a; --crit-wash:#f8e3e3;
+    --good:#26734a; --good-wash:#e0efe6;
+    --shadow:0 1px 2px rgba(16,40,45,.06),0 6px 20px rgba(16,40,45,.05);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 20px 60px}
+  a{color:var(--accent-ink);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .tnum{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+
+  /* header */
+  header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+    gap:14px;padding-bottom:16px;border-bottom:2px solid var(--accent)}
+  .brand{display:flex;align-items:center;gap:13px}
+  .glyph{width:40px;height:40px;border-radius:9px;background:var(--accent);flex:0 0 auto;
+    display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)}
+  .glyph svg{width:24px;height:24px}
+  h1{font-size:1.34rem;margin:0;letter-spacing:-.015em;font-weight:680;line-height:1.15}
+  .sub{color:var(--ink-2);font-size:.82rem;margin-top:2px}
+  .live{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-family:var(--mono);
+    color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px var(--good-wash)}
+
+  /* section titles */
+  .eyebrow{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--accent-ink);margin:30px 0 12px;display:flex;align-items:center;gap:10px}
+  .eyebrow::after{content:"";height:1px;flex:1;background:var(--hair)}
+
+  /* KPI row */
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}
+  .kpi{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:14px 15px;
+    box-shadow:var(--shadow)}
+  .kpi .n{font-family:var(--mono);font-size:1.75rem;font-weight:600;letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums}
+  .kpi .l{font-size:.74rem;color:var(--ink-2);margin-top:1px}
+  .kpi.accent .n{color:var(--accent-ink)}
+
+  /* cards grid */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid-charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--panel);border:1px solid var(--hair);border-radius:14px;padding:16px 17px;
+    box-shadow:var(--shadow)}
+  .card h3{margin:0 0 3px;font-size:.98rem;letter-spacing:-.01em}
+  .card .hint{color:var(--ink-2);font-size:.76rem;margin:0 0 13px}
+
+  /* feed items */
+  .feed{display:flex;flex-direction:column}
+  .item{padding:11px 0;border-top:1px solid var(--hair-2)}
+  .item:first-child{border-top:0;padding-top:2px}
+  .item .t{font-size:.9rem;font-weight:560;line-height:1.35;letter-spacing:-.005em}
+  .item .m{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:5px;font-size:.72rem;color:var(--ink-2)}
+  .src{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+    padding:1px 6px;border-radius:5px;background:var(--panel-2);border:1px solid var(--hair)}
+  .src.WHO{color:#1666b0;border-color:#bcd6ef;background:#eaf2fb}
+  .src.CDC{color:#0b7285;border-color:#bfe0e5;background:#e4f3f5}
+  .src.PubMed{color:#7a4bbd;border-color:#dccef0;background:#f2ecfb}
+  .src.ClinicalTrials{color:#256b45;border-color:#c4e2d1;background:#e6f4ec}
+  @media (prefers-color-scheme:dark){
+    .src.WHO{color:#8fc0ef;background:#12232f;border-color:#254056}
+    .src.CDC{color:#5fd0df;background:#0f2b30;border-color:#1f4147}
+    .src.PubMed{color:#c4a8ee;background:#221836;border-color:#3a2a55}
+    .src.ClinicalTrials{color:#78d3a0;background:#122a1c;border-color:#234634}
+  }
+  .tag{font-size:.68rem;padding:1px 7px;border-radius:20px;font-weight:600;letter-spacing:.01em}
+  .tag.out{color:var(--crit);background:var(--crit-wash)}
+  .tag.amr{color:var(--accent-ink);background:var(--accent-wash)}
+  .tag.emg{color:var(--rise);background:var(--rise-wash)}
+  .tag.trial{color:var(--good);background:var(--good-wash)}
+
+  /* bar charts */
+  .bars{display:flex;flex-direction:column;gap:9px}
+  .bar-row{display:grid;grid-template-columns:132px 1fr 34px;align-items:center;gap:10px}
+  .bar-lab{font-size:.78rem;text-align:right;color:var(--ink);white-space:nowrap;overflow:hidden;
+    text-overflow:ellipsis}
+  .bar-track{height:16px;background:var(--panel-2);border-radius:5px;overflow:hidden;border:1px solid var(--hair-2)}
+  .bar-fill{height:100%;border-radius:5px 0 0 5px;background:linear-gradient(90deg,var(--accent),var(--accent-ink));
+    min-width:2px}
+  .bar-fill.g2{background:linear-gradient(90deg,#7048b6,#5a3a97)}
+  .bar-fill.g3{background:linear-gradient(90deg,#d9670f,#b4530a)}
+  .bar-fill.g4{background:linear-gradient(90deg,#2f8f57,#237045)}
+  .bar-val{font-family:var(--mono);font-size:.78rem;color:var(--ink-2);text-align:right;
+    font-variant-numeric:tabular-nums}
+
+  /* rising chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border-radius:9px;
+    background:var(--panel-2);border:1px solid var(--hair);font-size:.8rem}
+  .chip .d{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--rise);
+    background:var(--rise-wash);padding:1px 5px;border-radius:5px}
+
+  /* knowledge graph */
+  .kg{display:grid;grid-template-columns:150px 1fr;gap:0;align-items:stretch}
+  .kg-hub{display:grid;place-items:center;position:relative}
+  .kg-node{background:var(--accent);color:#fff;border-radius:12px;padding:14px 12px;text-align:center;
+    box-shadow:var(--shadow);z-index:2}
+  .kg-node .big{font-family:var(--mono);font-size:1.3rem;font-weight:700;letter-spacing:.02em}
+  .kg-node .sm{font-size:.66rem;opacity:.85;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+  .kg-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .kg-group{border:1px solid var(--hair);border-radius:11px;padding:11px 12px;background:var(--panel-2)}
+  .kg-group .gh{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-2);
+    font-family:var(--mono);margin-bottom:7px;display:flex;gap:6px;align-items:center}
+  .kg-group .gh b{width:6px;height:6px;border-radius:50%;display:inline-block}
+  .kg-list{display:flex;flex-wrap:wrap;gap:6px}
+  .kg-list span{font-size:.76rem;padding:2px 8px;border-radius:7px;background:var(--panel);
+    border:1px solid var(--hair);white-space:nowrap}
+  .kg-list span i{font-style:normal;font-family:var(--mono);font-size:.68rem;color:var(--ink-2);margin-left:4px}
+  .path{margin-top:14px;padding:11px 13px;border-radius:10px;background:var(--accent-wash);
+    font-family:var(--mono);font-size:.78rem;color:var(--accent-ink);overflow-x:auto;white-space:nowrap}
+  .path b{color:var(--ink)}
+
+  /* narrative (editorial) */
+  .narr{font-family:var(--serif);font-size:1.02rem;line-height:1.62;color:var(--ink)}
+  .narr .lede{font-size:.72rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;
+    color:var(--accent-ink);display:block;margin-bottom:9px}
+
+  .split{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+  .note{margin-top:14px;font-size:.78rem;color:var(--ink-2);background:var(--panel-2);
+    border:1px solid var(--hair);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:11px 14px}
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--hair);color:var(--ink-2);font-size:.76rem;
+    display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between}
+  .theme-toggle{position:fixed;top:14px;right:14px;z-index:9;background:var(--panel);border:1px solid var(--hair);
+    color:var(--ink-2);border-radius:8px;width:34px;height:34px;cursor:pointer;box-shadow:var(--shadow);
+    display:grid;place-items:center;font-size:1rem}
+
+  @media (max-width:860px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .grid-2,.grid-charts,.split{grid-template-columns:1fr}
+    .kg{grid-template-columns:1fr}.kg-hub{margin-bottom:12px}
+    .bar-row{grid-template-columns:104px 1fr 30px}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .bar-fill{animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+    @keyframes grow{from{width:0 !important}}
+  }
+</style>
+
+<button class="theme-toggle" id="tt" aria-label="Toggle light/dark">◑</button>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span>
+      <div>
+        <h1>Global AMR &amp; Infectious Disease Intelligence</h1>
+        <div class="sub">Automated open-source surveillance · extraction · trend analysis</div>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div class="live"><span class="dot"></span> Snapshot · 2026-07-08</div>
+      <div class="sub tnum" style="margin-top:3px">1,934 documents indexed</div>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi accent"><div class="n tnum">1,934</div><div class="l">Documents indexed</div></div>
+    <div class="kpi"><div class="n tnum">62</div><div class="l">New · last 30 days</div></div>
+    <div class="kpi"><div class="n tnum">5</div><div class="l">Live sources</div></div>
+    <div class="kpi"><div class="n tnum">8</div><div class="l">Event categories</div></div>
+    <div class="kpi"><div class="n tnum">22</div><div class="l">Pathogens tracked</div></div>
+  </div>
+
+  <!-- TODAY -->
+  <div class="eyebrow">Today · highlights</div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Infectious-disease events</h3>
+      <p class="hint">Outbreak &amp; emerging-pathogen signals, most recent first</p>
+      <div class="feed">
+        <div class="item"><div class="t"><a href="https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON612">Ebola (Bundibugyo virus) — DR Congo &amp; Uganda</a></div>
+          <div class="m"><span class="src WHO">WHO</span><span class="tag out">Outbreak</span><span class="tnum">2026-07-03</span> · 1,460 confirmed, 452 deaths (DRC)</div></div>
+        <div class="item"><div class="t"><a href="https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON611">Andes hantavirus linked to cruise ship M/V Hondius</a></div>
+          <div class="m"><span class="src WHO">WHO</span><span class="tag out">Outbreak</span><span class="tnum">2026-07-02</span> · 5th DON update, multi-location</div></div>
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42409129/">Ceftazidime-avibactam resistance via KPC-234 mutation &amp; IncX3-NDM-1 plasmid transfer</a></div>
+          <div class="m"><span class="src PubMed">PubMed</span><span class="tag emg">Emerging</span><span class="tnum">2026-07-06</span> · K. pneumoniae, single patient</div></div>
+        <div class="item"><div class="t"><a href="https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&amp;c=765973">CDC alert: E. coli outbreak linked to frozen blueberries</a></div>
+          <div class="m"><span class="src CDC">CDC</span><span class="tag out">Outbreak</span><span class="tnum">2026-07-07</span> · product recall</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Antimicrobial-resistance highlights</h3>
+      <p class="hint">AMR &amp; new-drug signals, most recent first</p>
+      <div class="feed">
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42414940/">Molecular epidemiology of carbapenem-resistant Gram-negatives, Lebanon (MDRO network)</a></div>
+          <div class="m"><span class="src PubMed">PubMed</span><span class="tag amr">AMR</span><span class="tnum">2026-07-07</span> · CRE · CRAB · CRPA</div></div>
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42413774/">Infection prevention for CRE/ESBL Gram-negatives in ICUs — network meta-analysis</a></div>
+          <div class="m"><span class="src PubMed">PubMed</span><span class="tag amr">AMR</span><span class="tnum">2026-07-07</span> · systematic review</div></div>
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42414422/">Loss &amp; resurgence of MDR in a carbapenem-resistant E. coli (blaNDM-1)</a></div>
+          <div class="m"><span class="src PubMed">PubMed</span><span class="tag amr">AMR</span><span class="tnum">2026-07-08</span> · 294-day evolution</div></div>
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42409516/">Carbapenem-resistant &amp; ESBL bacteria in retail vegetables, USA</a></div>
+          <div class="m"><span class="src PubMed">PubMed</span><span class="tag amr">AMR</span><span class="tnum">2026</span> · community reservoir</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI NARRATIVE -->
+  <div class="eyebrow">AI trend analysis · 30-day window</div>
+  <div class="card">
+    <div class="narr">
+      <span class="lede">Automated synthesis — rule-based today, LLM-written once a Gemini key is added</span>
+      In the last 30 days the platform ingested <b>62 new documents</b> (1,934 total). The most-discussed
+      pathogens are <b>Acinetobacter baumannii</b>, <b>Staphylococcus aureus / MRSA</b>, and <b>CRE</b>, with
+      <b>carbapenemase</b> the dominant resistance mechanism and <b>vancomycin</b> and
+      <b>ceftazidime-avibactam</b> the most-referenced agents. Outbreak signal is concentrated in the
+      <b>DR Congo &amp; Uganda</b> Ebola event; on the resistance side, carbapenemase mentions rose
+      <b>+4</b> versus the prior 30 days and CRAB appeared from a zero baseline — a pattern worth watching
+      in APAC and MENA surveillance streams.
+    </div>
+  </div>
+
+  <!-- TRENDS -->
+  <div class="eyebrow">30-day trends · what's being discussed</div>
+  <div class="grid-charts">
+    <div class="card">
+      <h3>Top pathogens</h3><p class="hint">documents mentioning each · last 30 days</p>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-lab">A. baumannii</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-val">8</div></div>
+        <div class="bar-row"><div class="bar-lab">S. aureus</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-val">8</div></div>
+        <div class="bar-row"><div class="bar-lab">MRSA</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-val">8</div></div>
+        <div class="bar-row"><div class="bar-lab">CRE</div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><div class="bar-val">7</div></div>
+        <div class="bar-row"><div class="bar-lab">P. aeruginosa</div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><div class="bar-val">7</div></div>
+        <div class="bar-row"><div class="bar-lab">Candida auris</div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><div class="bar-val">6</div></div>
+        <div class="bar-row"><div class="bar-lab">CRAB</div><div class="bar-track"><div class="bar-fill" style="width:63%"></div></div><div class="bar-val">5</div></div>
+        <div class="bar-row"><div class="bar-lab">VRE</div><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><div class="bar-val">3</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Resistance mechanisms</h3><p class="hint">documents mentioning each · last 30 days</p>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-lab">carbapenemase</div><div class="bar-track"><div class="bar-fill g2" style="width:100%"></div></div><div class="bar-val">6</div></div>
+        <div class="bar-row"><div class="bar-lab">NDM</div><div class="bar-track"><div class="bar-fill g2" style="width:33%"></div></div><div class="bar-val">2</div></div>
+        <div class="bar-row"><div class="bar-lab">OXA-23</div><div class="bar-track"><div class="bar-fill g2" style="width:33%"></div></div><div class="bar-val">2</div></div>
+        <div class="bar-row"><div class="bar-lab">KPC</div><div class="bar-track"><div class="bar-fill g2" style="width:17%"></div></div><div class="bar-val">1</div></div>
+        <div class="bar-row"><div class="bar-lab">vanA</div><div class="bar-track"><div class="bar-fill g2" style="width:17%"></div></div><div class="bar-val">1</div></div>
+        <div class="bar-row"><div class="bar-lab">vanB</div><div class="bar-track"><div class="bar-fill g2" style="width:17%"></div></div><div class="bar-val">1</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Most active countries</h3><p class="hint">documents geolocated · last 30 days</p>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-lab">DR Congo</div><div class="bar-track"><div class="bar-fill g3" style="width:100%"></div></div><div class="bar-val">6</div></div>
+        <div class="bar-row"><div class="bar-lab">Uganda</div><div class="bar-track"><div class="bar-fill g3" style="width:100%"></div></div><div class="bar-val">6</div></div>
+        <div class="bar-row"><div class="bar-lab">France</div><div class="bar-track"><div class="bar-fill g3" style="width:50%"></div></div><div class="bar-val">3</div></div>
+        <div class="bar-row"><div class="bar-lab">China</div><div class="bar-track"><div class="bar-fill g3" style="width:50%"></div></div><div class="bar-val">3</div></div>
+        <div class="bar-row"><div class="bar-lab">Bangladesh</div><div class="bar-track"><div class="bar-fill g3" style="width:33%"></div></div><div class="bar-val">2</div></div>
+        <div class="bar-row"><div class="bar-lab">United Kingdom</div><div class="bar-track"><div class="bar-fill g3" style="width:33%"></div></div><div class="bar-val">2</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Top antibiotics</h3><p class="hint">documents mentioning each · last 30 days</p>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-lab">vancomycin</div><div class="bar-track"><div class="bar-fill g4" style="width:100%"></div></div><div class="bar-val">7</div></div>
+        <div class="bar-row"><div class="bar-lab">ceftazidime-avi.</div><div class="bar-track"><div class="bar-fill g4" style="width:29%"></div></div><div class="bar-val">2</div></div>
+        <div class="bar-row"><div class="bar-lab">meropenem</div><div class="bar-track"><div class="bar-fill g4" style="width:29%"></div></div><div class="bar-val">2</div></div>
+        <div class="bar-row"><div class="bar-lab">imipenem</div><div class="bar-track"><div class="bar-fill g4" style="width:29%"></div></div><div class="bar-val">2</div></div>
+        <div class="bar-row"><div class="bar-lab">cefiderocol</div><div class="bar-track"><div class="bar-fill g4" style="width:14%"></div></div><div class="bar-val">1</div></div>
+        <div class="bar-row"><div class="bar-lab">fosfomycin</div><div class="bar-track"><div class="bar-fill g4" style="width:14%"></div></div><div class="bar-val">1</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISING -->
+  <div class="eyebrow">Fastest rising · last 30d vs previous 30d</div>
+  <div class="split">
+    <div class="card">
+      <h3>Pathogens gaining attention</h3><p class="hint">change in document count</p>
+      <div class="chips">
+        <span class="chip">A. baumannii <span class="d">+7</span></span>
+        <span class="chip">MRSA <span class="d">+7</span></span>
+        <span class="chip">S. aureus <span class="d">+6</span></span>
+        <span class="chip">CRE <span class="d">+6</span></span>
+        <span class="chip">P. aeruginosa <span class="d">+6</span></span>
+        <span class="chip">Candida auris <span class="d">+5</span></span>
+        <span class="chip">CRAB <span class="d">+5</span></span>
+        <span class="chip">E. coli <span class="d">+4</span></span>
+      </div>
+      <h3 style="margin-top:16px">Resistance mechanisms rising</h3><p class="hint">change in document count</p>
+      <div class="chips">
+        <span class="chip">carbapenemase <span class="d">+4</span></span>
+        <span class="chip">OXA-23 <span class="d">+2</span></span>
+        <span class="chip">vanA <span class="d">+1</span></span>
+        <span class="chip">vanB <span class="d">+1</span></span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Event-type mix</h3><p class="hint">how the classifier labelled all 1,934 documents</p>
+      <div class="bars">
+        <div class="bar-row"><div class="bar-lab">Research Article</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-val">1278</div></div>
+        <div class="bar-row"><div class="bar-lab">Outbreak</div><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><div class="bar-val">228</div></div>
+        <div class="bar-row"><div class="bar-lab">Vaccine</div><div class="bar-track"><div class="bar-fill" style="width:13%"></div></div><div class="bar-val">165</div></div>
+        <div class="bar-row"><div class="bar-lab">Guideline</div><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div><div class="bar-val">111</div></div>
+        <div class="bar-row"><div class="bar-lab">AMR</div><div class="bar-track"><div class="bar-fill" style="width:7%"></div></div><div class="bar-val">84</div></div>
+        <div class="bar-row"><div class="bar-lab">Clinical Trial</div><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><div class="bar-val">38</div></div>
+        <div class="bar-row"><div class="bar-lab">Emerging Pathogen</div><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><div class="bar-val">28</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KNOWLEDGE GRAPH -->
+  <div class="eyebrow">Knowledge graph · entity CRE</div>
+  <div class="card">
+    <h3>What CRE connects to</h3>
+    <p class="hint">Relationships mined from co-occurrence across documents — the same graph the platform builds for every pathogen</p>
+    <div class="kg">
+      <div class="kg-hub">
+        <div class="kg-node"><div class="big">CRE</div><div class="sm">pathogen</div></div>
+      </div>
+      <div class="kg-cols">
+        <div class="kg-group"><div class="gh"><b style="background:var(--rise)"></b>Countries</div>
+          <div class="kg-list"><span>Korea<i>2</i></span><span>Argentina<i>1</i></span><span>France<i>1</i></span><span>Italy<i>1</i></span><span>Spain<i>1</i></span></div></div>
+        <div class="kg-group"><div class="gh"><b style="background:#7048b6"></b>Resistance genes</div>
+          <div class="kg-list"><span>carbapenemase<i>3</i></span><span>OXA-48<i>2</i></span><span>KPC<i>1</i></span><span>NDM<i>1</i></span><span>MBL<i>1</i></span></div></div>
+        <div class="kg-group"><div class="gh"><b style="background:var(--good)"></b>Antibiotics</div>
+          <div class="kg-list"><span>vancomycin<i>3</i></span><span>fosfomycin<i>2</i></span><span>ceftazidime-avi.<i>1</i></span><span>imipenem<i>1</i></span></div></div>
+        <div class="kg-group"><div class="gh"><b style="background:var(--accent)"></b>Diseases</div>
+          <div class="kg-list"><span>colonisation<i>6</i></span><span>bloodstream infection<i>3</i></span></div></div>
+      </div>
+    </div>
+    <div class="path"><b>CRE</b> → France → OXA-48 → ceftazidime-avibactam → colonisation → <i>ClinicalTrials · NCT07676513</i></div>
+  </div>
+
+  <!-- LATEST -->
+  <div class="eyebrow">Latest · publications &amp; clinical trials</div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Latest publications <span class="src PubMed" style="vertical-align:middle">PubMed</span></h3>
+      <div class="feed" style="margin-top:8px">
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42412003/">Host-directed antimicrobial-peptide biomaterials vs Gram-negative infections</a></div>
+          <div class="m"><span class="tnum">2026-07-07</span> · CRAB · P. aeruginosa · K. pneumoniae</div></div>
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42411576/">Photothermal “artificial macrophage” for systemic antibacterial response</a></div>
+          <div class="m"><span class="tnum">2026-07-07</span> · MRSA</div></div>
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42412160/">Lactobacillus strains disrupting AMR in microbial biofilms — review</a></div>
+          <div class="m"><span class="tnum">2026-07-07</span> · biofilm · AMR</div></div>
+        <div class="item"><div class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/42413686/">Pitt bacteremia score in non-bacteremic MDRO infections</a></div>
+          <div class="m"><span class="tnum">2026-07-07</span> · MDRO · prognosis</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Latest clinical trials <span class="src ClinicalTrials" style="vertical-align:middle">ClinicalTrials</span></h3>
+      <div class="feed" style="margin-top:8px">
+        <div class="item"><div class="t"><a href="https://clinicaltrials.gov/study/NCT07675954">6-month MDR-END Plus regimen for rifampicin-resistant TB</a></div>
+          <div class="m"><span class="tag trial">Phase 3</span><span class="tnum">2026-10</span> · South Africa</div></div>
+        <div class="item"><div class="t"><a href="https://clinicaltrials.gov/study/NCT07663110">Rapid CPE screening to cut resistant-organism spread</a></div>
+          <div class="m"><span class="tag trial">Trial</span><span class="tnum">2026-08</span> · United Kingdom</div></div>
+        <div class="item"><div class="t"><a href="https://clinicaltrials.gov/study/NCT07685132">CPE load, environmental contamination &amp; ICU transmission</a></div>
+          <div class="m"><span class="tag trial">Trial</span><span class="tnum">2026-08</span> · Argentina</div></div>
+        <div class="item"><div class="t"><a href="https://clinicaltrials.gov/study/NCT07676513">Genomic diversity of carbapenemase-producing E. coli, S. France</a></div>
+          <div class="m"><span class="tag trial">Trial</span><span class="tnum">2026-06</span> · France</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>About this page.</b> This is a static snapshot rendered from the platform's real database after one
+    collection run (WHO · CDC · ECDC · PubMed · ClinicalTrials.gov). The <b>live product is an interactive
+    Streamlit app</b> — run <span class="tnum">streamlit&nbsp;run&nbsp;app/Home.py</span> for clickable search,
+    filters, time-series charts, and one-click weekly-report export. Add a free Gemini key to upgrade the
+    extraction and trend narrative from rule-based to LLM.
+  </div>
+
+  <footer>
+    <span>Sources: WHO DON · CDC · ECDC · PubMed · ClinicalTrials.gov · GLASS</span>
+    <span class="tnum">id-intel-platform · MVP · 2026-07-08</span>
+  </footer>
+</div>
+
+<script>
+  const tt=document.getElementById('tt');
+  function cur(){const r=document.documentElement.getAttribute('data-theme');
+    if(r)return r;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}
+  tt.addEventListener('click',()=>{const n=cur()==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',n);});
+</script>
