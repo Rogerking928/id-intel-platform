@@ -134,6 +134,21 @@ COUNTRY_REGION = {
     "Democratic Republic of the Congo": "Africa",
 }
 
+# Collapse spelling variants of the same country to one canonical name so
+# search, the knowledge graph, and novelty detection don't double-count.
+COUNTRY_ALIASES = {
+    "USA": "United States",
+    "United States of America": "United States",
+    "England": "United Kingdom",
+    "Korea": "South Korea",
+    "Viet Nam": "Vietnam",
+}
+
+
+def canonical_country(name: str) -> str:
+    return COUNTRY_ALIASES.get(name, name)
+
+
 # Study-type keyword hints (used by the classifier)
 STUDY_TYPE_HINTS = {
     "Clinical Trial": ["randomi", "clinical trial", "phase i", "phase ii", "phase iii",

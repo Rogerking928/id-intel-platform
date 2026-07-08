@@ -27,13 +27,13 @@ def _find_terms(text_low: str, table: dict[str, list[str]]) -> list[str]:
 
 
 def _find_countries(text: str) -> tuple[list[str], list[str]]:
-    countries, regions = [], set()
+    countries, regions = set(), set()
     for country, region in dic.COUNTRY_REGION.items():
         pattern = r"\b" + re.escape(country) + r"\b"
         if re.search(pattern, text):  # case-sensitive: country names are capitalised
-            countries.append(country)
+            countries.add(dic.canonical_country(country))
             regions.add(region)
-    return sorted(set(countries)), sorted(regions)
+    return sorted(countries), sorted(regions)
 
 
 def classify_event_type(text_low: str, source: str) -> str:
