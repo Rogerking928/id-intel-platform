@@ -27,4 +27,11 @@ keywords:
   - information extraction
   - knowledge graph
   - early warning
-# doi: "10.5281/zenodo.XXXXXXX"   # <- fill in after Zenodo mints your DOI
+doi: "10.5281/zenodo.21263882"   # concept DOI (always latest version)
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21263882"
+    description: "Concept DOI (all versions)"
+  - type: doi
+    value: "10.5281/zenodo.21263883"
+    description: "Version DOI (v1.0.0)"

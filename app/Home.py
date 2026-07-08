@@ -21,6 +21,11 @@ st.markdown("<div style='color:#0b7285;font-weight:600;margin-top:-6px'>"
             " &nbsp;·&nbsp; "
             "<a href='mailto:rogerwang890928@gmail.com' style='color:#0b7285'>"
             "rogerwang890928@gmail.com</a></div>", unsafe_allow_html=True)
+st.markdown("<div style='font-size:.8rem;color:#8aa;margin-top:4px'>"
+            "📖 Cite this platform: Wang Y-H. <i>VIGIL — Global AMR & Infectious "
+            "Disease Intelligence Platform.</i> Zenodo; 2026. "
+            "<a href='https://doi.org/10.5281/zenodo.21263882' style='color:#3fb6c9'>"
+            "doi.org/10.5281/zenodo.21263882</a></div>", unsafe_allow_html=True)
 
 run = latest_run()
 if run:
