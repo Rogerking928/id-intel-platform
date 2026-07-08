@@ -284,6 +284,50 @@ def log_run(started_at: str, summary: str):
         )
 
 
+# ---------------------------------------------------------------------------
+# Gold-standard annotations (Paper 1)
+# ---------------------------------------------------------------------------
+def save_annotation_set(document_id: int, annotator: str, data: dict):
+    """Replace this annotator's labels for a document. `data` maps field -> list
+    (multi-label) or str (single-label)."""
+    with get_conn() as conn:
+        conn.execute("DELETE FROM annotations WHERE document_id=? AND annotator=?",
+                     (document_id, annotator))
+        for field, val in data.items():
+            values = val if isinstance(val, list) else ([val] if val else [])
+            for v in values:
+                v = str(v).strip()
+                if v:
+                    conn.execute(
+                        "INSERT INTO annotations (document_id, annotator, field, value, created_at)"
+                        " VALUES (?,?,?,?,?)",
+                        (document_id, annotator, field, v, now_iso()))
+
+
+def get_annotation_set(document_id: int, annotator: str) -> dict:
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT field, value FROM annotations WHERE document_id=? AND annotator=?",
+            (document_id, annotator)).fetchall()
+    out = {}
+    for r in rows:
+        out.setdefault(r["field"], []).append(r["value"])
+    return out
+
+
+def list_annotators() -> list[str]:
+    with get_conn() as conn:
+        return [r["annotator"] for r in conn.execute(
+            "SELECT DISTINCT annotator FROM annotations ORDER BY annotator").fetchall()]
+
+
+def annotated_document_ids(annotator: str) -> set[int]:
+    with get_conn() as conn:
+        return {r["document_id"] for r in conn.execute(
+            "SELECT DISTINCT document_id FROM annotations WHERE annotator=?",
+            (annotator,)).fetchall()}
+
+
 if __name__ == "__main__":
     init_db()
     print(f"Initialised database at {config.DB_PATH}")
