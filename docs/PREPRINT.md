@@ -2,7 +2,8 @@
 
 > **DRAFT preprint (resource descriptor).** Before posting: (1) regenerate the
 > numbers below from the live platform (they update daily); (2) complete the
-> reference list. Numbers here are from a snapshot of **2,075 documents**.
+> citations marked `[ref]`. Numbers here are from a snapshot of **2,075
+> documents**.
 
 **Author.** Yen-Hsiang Wang, MD, MSc¹ · rogerwang890928@gmail.com ·
 ORCID: [0000-0003-0307-8447](https://orcid.org/0000-0003-0307-8447)
@@ -19,127 +20,244 @@ Licence: MIT.
 ## Abstract
 
 **Background.** Antimicrobial resistance (AMR) and emerging infections generate
-large volumes of open-source text — outbreak alerts, literature, trial
-registries, surveillance reports — but converting them into structured,
-comparable intelligence is largely manual. Existing event-based surveillance
-systems focus on outbreak detection rather than AMR-specific, structured
-extraction, and few are open, reproducible, or benchmarked against reference
-data.
+large volumes of open-source text — outbreak alerts, peer-reviewed and preprint
+literature, trial registries, and surveillance reports — yet converting this
+text into structured, comparable intelligence remains largely manual. Existing
+open-source epidemic-intelligence systems are optimised for outbreak event
+detection rather than AMR-specific structured extraction, and few are fully open,
+reproducible, or explicitly benchmarked against reference surveillance data.
 
-**Implementation.** VIGIL is a free, open-source platform that automatically
-collects documents daily from eight source families (WHO Disease Outbreak News,
-CDC, ECDC, UK Health Security Agency, PubMed, bioRxiv/medRxiv via Europe PMC,
-ClinicalTrials.gov, and WHO GLASS/GHO), extracts a structured schema (pathogen,
-resistance gene/mechanism, antibiotic, disease, country, event type) using an
-always-on rule-based extractor and an optional large language model (LLM),
-builds a co-occurrence knowledge graph, and computes trend, emerging-signal,
-forecasting, novelty, and country-risk analytics. All analytics are validated
-against WHO GHO/GLASS resistance indicators, which the platform ingests
-automatically. The stack (Python, SQLite, Streamlit) is fully reproducible and
-deploys for free; daily updates run via continuous integration.
+**Objective.** To design, build, and openly release a reproducible platform that
+automatically collects open-source infectious-disease/AMR text, extracts a
+structured schema, builds a knowledge graph, and produces validation-first
+analytics, with an Asia-Pacific (APAC) focus.
 
-**Results (proof of concept).** A snapshot of 2,075 documents across seven
-actively-contributing sources yielded 31 distinct pathogens, 12 resistance
-genes/mechanisms, 62 countries and 1,060 knowledge-graph relations, plus 1,005
-WHO GHO reference resistance values (101 countries, 2016–2023). In a preliminary
-construct-validity check across 23 countries, raw document volume was essentially
-uncorrelated with measured MRSA resistance (Spearman ρ = 0.06) whereas a
-publication-normalised AMR share showed a weak positive association (ρ = 0.28);
-and literature signal did **not** discriminate which countries had officially
-reported outbreaks (rank-AUC = 0.16), with outbreaks concentrated in
-low-literature, lower-resource countries — an illustration of the global
-surveillance gap that the platform makes measurable.
+**Implementation.** VIGIL collects documents daily from eight configured source
+families (WHO Disease Outbreak News, US CDC, ECDC, UK Health Security Agency,
+PubMed, bioRxiv/medRxiv via Europe PMC, ClinicalTrials.gov, and WHO GLASS/GHO).
+Each document is processed by an always-on rule-based extractor and an optional
+large language model (LLM), both returning the same schema (pathogen, resistance
+gene/mechanism, antibiotic, disease, country, event type). Entity co-occurrence
+yields a knowledge graph; downstream modules compute growth-rate and
+emerging-signal detection, weekly-volume forecasting with backtesting, novelty
+detection, graph queries, a global heatmap, a country risk signal, and an
+outbreak module. Analytics are validated against WHO GHO/GLASS resistance
+indicators, which the platform ingests automatically. The stack (Python, SQLite,
+Streamlit) is free, reproducible, and updates daily via continuous integration.
 
-**Conclusions.** VIGIL provides an open, reproducible, validation-first
-infrastructure for AMR/infectious-disease intelligence and a foundation for
-downstream methodological research (LLM extraction benchmarking, early-warning
-modelling). It is openly available with a citable DOI.
+**Results.** A snapshot of 2,075 documents across seven actively-contributing
+sources produced 31 distinct pathogens, 12 resistance genes/mechanisms, 62
+countries, and 1,060 knowledge-graph relations, alongside 1,005 WHO GHO reference
+resistance values (101 countries, 2016–2023). In a preliminary construct-validity
+analysis of 23 countries, raw document volume was essentially uncorrelated with
+measured MRSA bloodstream-infection resistance (Spearman ρ = 0.06), whereas a
+publication-normalised AMR share showed a weak positive association (ρ = 0.28).
+Literature signal did not discriminate which of 39 countries had officially
+reported outbreaks (rank-AUC = 0.16); reported outbreaks concentrated in
+low-literature, lower-resource settings — a quantification of the global
+surveillance gap.
 
-**Keywords.** antimicrobial resistance; infectious disease surveillance;
-large language models; information extraction; knowledge graph; open data.
+**Conclusions.** VIGIL is an open, reproducible, validation-first infrastructure
+for AMR and infectious-disease intelligence, and a foundation for downstream
+methodological research including clinician-annotated LLM extraction benchmarking
+and early-warning modelling. It is openly available with a citable DOI.
+
+**Keywords.** antimicrobial resistance; infectious disease surveillance; large
+language models; information extraction; knowledge graph; open data; Asia-Pacific.
 
 ---
 
 ## 1. Background
 
-[Motivate: AMR burden; open-source epidemic intelligence (WHO EIOS, HealthMap,
-ProMED, EPIWATCH) targets outbreaks, not structured AMR extraction; LLMs offer
-new extraction capability but need clinician-grounded, reproducible, benchmarked
-tooling; gap = an open, AMR-focused, validation-first platform, with an
-Asia-Pacific lens. — expand with references §8.]
+Antimicrobial resistance is among the leading global health threats, associated
+with millions of attributable and associated deaths annually, with the heaviest
+burden in low- and middle-income regions where surveillance capacity is weakest
+`[ref: GBD AMR 2022; WHO AMR]`. Timely awareness of where resistant pathogens and
+outbreaks are emerging depends on synthesising information that is scattered
+across many open sources — national and supranational alerts, the biomedical
+literature and preprints, and clinical-trial registries — updated continuously
+and in heterogeneous formats.
+
+Open-source epidemic intelligence has a strong tradition: systems such as WHO
+EIOS, HealthMap, ProMED-mail, and EPIWATCH aggregate and flag disease events from
+media and official reports `[ref]`. These systems are valuable for outbreak
+signal detection, but they are generally oriented toward *events* rather than the
+*structured, AMR-specific entities* (pathogen–gene–antibiotic–country
+relationships) that AMR research and stewardship require, and several are
+proprietary or not straightforwardly reproducible. Conversely, curated AMR
+surveillance systems such as WHO GLASS provide high-quality laboratory-based
+resistance data, but with reporting lag and limited country coverage `[ref]`.
+
+Large language models (LLMs) now make it feasible to extract structured entities
+from free text at scale, but their use in AMR surveillance raises questions of
+accuracy, reproducibility, cost, and clinician trust, and there is little open,
+benchmarked tooling — particularly outside high-income, English-clinical-note
+settings `[ref]`. There is therefore a gap for an **open, reproducible,
+AMR-focused, validation-first** platform that (i) ingests open sources
+automatically, (ii) extracts a structured schema using transparent and LLM
+methods side by side, (iii) links entities into a knowledge graph, and (iv)
+grounds its analytics in reference surveillance data — with an explicit
+Asia-Pacific lens, a region under-represented in existing tools.
+
+We present VIGIL (Vigilance Intelligence for Global Infectious-disease &
+resistance Landscape), which addresses this gap and is released fully open-source
+with a citable archive.
 
 ## 2. Implementation
 
-### 2.1 Architecture
-Collector → extractor → entities/relations → analytics → web app. Single-file
-SQLite store; every document retains raw text, source, URL and fetch time; every
-extraction retains model name/version, prompt version and raw output, enabling
-audit and model comparison.
+### 2.1 Overview and architecture
+VIGIL follows a linear, auditable pipeline: **collect → extract →
+entities/relations → analyse → serve** (Figure 1). Documents are stored in a
+single SQLite database. Every document retains its raw text, source, URL, and
+fetch timestamp; every extraction retains the extractor name, model version,
+prompt version, and raw output. This provenance makes each analytic result
+traceable to source text and supports head-to-head comparison of extractors.
 
 ### 2.2 Data sources
-Eight configured source families (Table 1), accessed through public APIs/feeds:
-WHO DON (OData), CDC/ECDC/UKHSA (RSS/Atom), PubMed (E-utilities), preprints
-(Europe PMC), ClinicalTrials.gov (API v2), and WHO GHO/GLASS resistance
-indicators (OData). Collection de-duplicates and appends only new records.
+Eight source families are configured (Table 1), each accessed through public
+APIs or feeds and de-duplicated so that only new records are appended on each
+run. Sources span official alerts (WHO DON, CDC, ECDC, UKHSA), the literature
+(PubMed, bioRxiv/medRxiv via Europe PMC), trials (ClinicalTrials.gov), and
+reference resistance data (WHO GHO/GLASS).
+
+**Table 1. Configured data sources.**
+
+| Source | Type | Access |
+|---|---|---|
+| WHO Disease Outbreak News | Official outbreak alerts | JSON (OData) API |
+| US CDC | Alerts / MMWR / newsroom | RSS |
+| ECDC | European communicable-disease news | RSS |
+| UK Health Security Agency | News & guidance | GOV.UK Atom feed |
+| PubMed | Peer-reviewed literature | NCBI E-utilities |
+| bioRxiv / medRxiv | Preprints | Europe PMC REST API |
+| ClinicalTrials.gov | Trial registrations | API v2 |
+| WHO GHO / GLASS | Reference resistance indicators | GHO OData API |
 
 ### 2.3 Information extraction
-An always-on **rule-based** extractor uses frozen controlled vocabularies (the
-codebook) and negation/assertion rules; an optional **LLM** extractor (Gemini;
-extensible) returns the same schema. Both outputs are stored per document,
-enabling head-to-head evaluation.
+Two extractors return an identical schema. The **rule-based** extractor applies
+frozen controlled vocabularies (a versioned codebook) with word-boundary
+matching, country-alias canonicalisation, and assertion/negation handling; it is
+free, offline, deterministic, and serves as the benchmark baseline. The optional
+**LLM** extractor (Google Gemini in the current build; the interface is
+model-agnostic) is prompted to return the same JSON schema. Because both outputs
+are stored per document, VIGIL supports a direct, reproducible comparison of
+methods — for example, on a paper describing altered ceftazidime-avibactam
+resistance, the LLM recovered specific alleles (KPC-234, NDM-1) and plasmid
+context that the dictionary baseline did not.
 
 ### 2.4 Knowledge graph and analytics
-Entity co-occurrence within documents yields Pathogen→Country→Gene→Antibiotic→
-Disease relations. Analytics include: growth-rate and emerging-signal detection;
-weekly-volume forecasting with backtesting; novelty detection (first-ever entity
-combinations); a knowledge-graph query interface; a global heatmap; a
-validation-first country risk signal; and an outbreak module with
-source-separated evaluation.
+Entity co-occurrence within a document generates
+Pathogen→Country→Gene→Antibiotic→Disease relations, queryable as a graph. On top
+of the graph and entity tables, VIGIL provides: (1) trend analysis with
+growth-rate and emerging-signal detection; (2) weekly discussion-volume
+forecasting with a transparent baseline and rolling backtest; (3) novelty
+detection that flags entity combinations never previously co-occurring in the
+corpus; (4) a knowledge-graph query interface (e.g. "which countries have newly
+reported a given resistance mechanism?"); (5) a global choropleth; (6) a
+validation-first country risk signal; and (7) an outbreak module.
 
 ### 2.5 Validation design
-Reference standard = WHO GHO/GLASS resistance indicators (auto-ingested).
-Construct validity compares platform signals to measured resistance; the outbreak
-task uses official-alert outcomes with literature-derived features (source
-separation) to avoid circularity. A frozen annotation codebook supports a
-downstream clinician-annotated extraction benchmark (leakage-controlled).
+Analytics are grounded in reference data rather than asserted. WHO GHO/GLASS
+resistance indicators (proportion of MRSA and third-generation-cephalosporin-
+resistant *E. coli* bloodstream infections) are ingested automatically as ground
+truth. Construct validity is assessed cross-sectionally against these values. The
+outbreak task deliberately separates sources — outcomes are taken from official
+alerts (WHO/CDC/ECDC/UKHSA) while features derive from the literature stream — to
+avoid circularity. A frozen annotation codebook and a `annotations` table support
+a planned clinician-annotated extraction benchmark under leakage controls.
 
-### 2.6 Availability & reproducibility
-Open source (MIT), archived on Zenodo (DOI), free daily updates via CI, and a
-public live instance. All code, the codebook, and the schema are versioned.
+### 2.6 Availability and reproducibility
+VIGIL is open-source (MIT), archived on Zenodo with a DOI, deployed as a public
+live instance, and updated daily at no cost via continuous integration. Code, the
+codebook, and the schema are versioned; a single command reproduces the pipeline.
 
-## 3. Results (proof of concept)
-[Insert: corpus description (Table/Fig), extraction examples (e.g. detection of
-KPC-234/NDM-1 that a dictionary misses), knowledge-graph example (CRE →
-country → gene → antibiotic), and the preliminary validity numbers above.
-Regenerate all numbers from the live platform before submission.]
+## 3. Results
+
+### 3.1 Corpus
+The analysed snapshot contained 2,075 documents. Seven sources contributed
+actively (CDC n=1,828; preprints n=116; PubMed n=54; ClinicalTrials n=37; UKHSA
+n=20; ECDC n=10; WHO DON n=10); the GLASS ingestion path is included but was not
+populated in this snapshot. Extraction yielded 31 distinct pathogens (including
+the priority phenotypes MRSA, VRE, CRE, CRAB, and *Candida auris*), 12 resistance
+genes/mechanisms, 62 countries, and 1,060 knowledge-graph relations. The WHO GHO
+ingestion added 1,005 reference resistance values spanning 101 countries and
+2016–2023.
+
+### 3.2 Extraction and knowledge graph (illustrative)
+Structured extraction reproduced expected AMR concepts and, for the LLM
+extractor, recovered fine-grained resistance alleles absent from the baseline
+dictionary. Graph queries returned interpretable chains — for example, for
+carbapenem-resistant Enterobacterales the platform linked specific countries,
+carbapenemase genes (e.g. OXA-48, KPC, NDM), and agents (e.g.
+ceftazidime-avibactam), each traceable to the underlying documents.
+
+### 3.3 Preliminary validation
+Across the 23 countries with both a platform AMR signal and a WHO GHO MRSA value,
+raw document volume was essentially uncorrelated with measured resistance
+(Spearman ρ = 0.06), whereas a publication-normalised AMR share showed a weak
+positive association (ρ = 0.28) — consistent with document volume reflecting
+research output rather than disease burden, and with normalisation partially
+recovering signal. In the outbreak task (39 countries, 29 with an officially
+reported outbreak), literature signal did not discriminate outbreak-affected
+countries (rank-AUC = 0.16); reported outbreaks concentrated in low-literature,
+lower-resource settings. These proof-of-concept results are preliminary and are
+expected to sharpen as the corpus accumulates, but they already demonstrate the
+platform's ability to make the surveillance gap explicit and measurable.
 
 ## 4. Discussion
-Positioning vs event-based systems; the measurable surveillance gap as an early
-finding; enablement of reproducible LLM-extraction benchmarking and early-warning
-research; APAC relevance.
+VIGIL complements, rather than duplicates, existing open-source
+epidemic-intelligence systems: where those emphasise outbreak-event detection,
+VIGIL emphasises **structured, AMR-specific extraction, a knowledge graph, and
+validation against reference resistance data**, all fully open and reproducible.
+Its most striking early observation — that raw open-source literature signal is
+uncorrelated with measured resistance and inversely associated with where
+outbreaks are officially reported — is itself a substantive finding: naïve
+text-volume indicators would misrank global risk, and any credible early-warning
+model must correct for reporting and publication bias. By quantifying this gap
+against WHO reference data, VIGIL turns a known caveat into a measurable target.
+
+The platform is also designed as research infrastructure. Because it stores both
+rule-based and LLM outputs with full provenance and ships a frozen annotation
+codebook, it directly enables a clinician-annotated benchmark of open LLMs for
+AMR extraction, and its accumulating time series supports early-warning modelling
+with lead-time evaluation against GLASS. Its Asia-Pacific focus addresses a
+region under-represented in existing tools.
 
 ## 5. Limitations
-Young corpus (analytics strengthen as history accumulates); reporting/publication
-bias (explicitly surfaced, not hidden); reference coverage — WHO GHO lacks some
-territories including Taiwan (a WHO listing limitation, not a platform merge),
-and China lacks values for these indicators; LLM free-tier throughput; the
-extraction benchmark awaits full clinician annotation.
+The corpus is young, so trend, forecasting, and novelty analytics are preliminary
+and strengthen with accumulated history. Text-derived geolocation reflects where
+topics are reported or studied, not confirmed case counts, and is subject to
+reporting and publication bias (which the platform surfaces rather than conceals).
+Reference coverage is incomplete: WHO GHO does not list some territories,
+including Taiwan (a listing limitation of the reference source, not a platform
+merge), and lacks values for several countries on these indicators. LLM
+extraction is currently constrained by free-tier throughput. Finally, the
+extraction benchmark awaits full clinician annotation and a second annotator for
+reliability estimation.
 
 ## 6. Conclusion
-An open, validation-first platform turning open-source text into structured,
-citable AMR/infectious-disease intelligence, and a base for a program of
-methodological studies.
+VIGIL is an open, validation-first platform that converts open-source
+infectious-disease and AMR text into structured, citable intelligence, and a
+foundation for a program of methodological studies. It is freely available, runs
+and updates at no cost, and is archived with a DOI for reuse and citation.
 
 ## 7. Declarations
-**Data/code availability:** as above (GitHub + Zenodo DOI). **Funding:** _[fill]_.
-**Competing interests:** none declared. **Ethics:** uses only open-source,
-aggregate/public data; no individual patient data. **Author contributions:** YHW
-conceived, built, and wrote.
+**Data and code availability:** all code and the annotated schema are available on
+GitHub and archived on Zenodo (DOI: 10.5281/zenodo.21263882); data derive from
+public open-source APIs. **Funding:** none `[confirm/fill]`. **Competing
+interests:** none declared. **Ethics:** the platform uses only open-source,
+aggregate/public data and no individual patient data. **Author contributions:**
+YHW conceived, designed, implemented, and wrote the work.
 
 ## 8. References (verify & complete before submission)
-- WHO. Global Antimicrobial Resistance and Use Surveillance System (GLASS). https://www.who.int/initiatives/glass
-- WHO. Epidemic Intelligence from Open Sources (EIOS). https://www.who.int/initiatives/eios
-- HealthMap. https://www.healthmap.org · ProMED-mail. https://promedmail.org · EPIWATCH (UNSW).
-- WHO Global Health Observatory OData API. https://www.who.int/data/gho/info/gho-odata-api
-- NCBI E-utilities; Europe PMC RESTful API; ClinicalTrials.gov API v2.
-- _[Add: AMR burden (e.g. GBD AMR); NLP/LLM for clinical or surveillance information extraction; benchmarking of open LLMs.]_
+1. WHO. Global Antimicrobial Resistance and Use Surveillance System (GLASS). https://www.who.int/initiatives/glass
+2. WHO. Epidemic Intelligence from Open Sources (EIOS). https://www.who.int/initiatives/eios
+3. Freifeld CC, et al. HealthMap. https://www.healthmap.org
+4. ProMED-mail, International Society for Infectious Diseases. https://promedmail.org
+5. MacIntyre CR, et al. EPIWATCH (UNSW). `[ref]`
+6. WHO Global Health Observatory OData API. https://www.who.int/data/gho/info/gho-odata-api
+7. NCBI E-utilities; Europe PMC RESTful API; ClinicalTrials.gov API v2.
+8. `[Add: GBD 2019 AMR burden (Murray CJL, et al., Lancet 2022); NLP/LLM for clinical/surveillance information extraction; open-LLM benchmarking.]`
+
+_Figure 1. Platform architecture (collect → extract → entities/relations →
+analyse → serve). [To be generated.]_
