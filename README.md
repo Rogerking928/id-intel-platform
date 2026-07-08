@@ -1,6 +1,6 @@
 # 🦠 Global AMR & Infectious Disease Intelligence Platform
 
-**Author: Yen-Hsiang Wang, MD, MSc** · wangyenjen0301@gmail.com
+**Author: Yen-Hsiang Wang, MD, MSc** · rogerwang890928@gmail.com
 
 An **AI-driven** platform that automatically collects and analyses global infectious-disease
 and antimicrobial-resistance (AMR) information every day. It is not a news aggregator — it

@@ -17,8 +17,8 @@ st.caption("An AI platform that collects, extracts, and analyses open-source "
 st.markdown("<div style='color:#0b7285;font-weight:600;margin-top:-6px'>"
             "Yen-Hsiang Wang, MD, MSc"
             " &nbsp;·&nbsp; "
-            "<a href='mailto:wangyenjen0301@gmail.com' style='color:#0b7285'>"
-            "wangyenjen0301@gmail.com</a></div>", unsafe_allow_html=True)
+            "<a href='mailto:rogerwang890928@gmail.com' style='color:#0b7285'>"
+            "rogerwang890928@gmail.com</a></div>", unsafe_allow_html=True)
 
 run = latest_run()
 if run:
