@@ -42,6 +42,7 @@ def run(verbose: bool = True) -> dict:
         if verbose and len(pending) > len(todo):
             print(f"  [LLM] {len(pending)} docs pending; processing {len(todo)} "
                   f"this run (GEMINI_MAX_PER_RUN={config.GEMINI_MAX_PER_RUN}).")
+        consec_rate_limit = 0
         for i, doc in enumerate(todo):
             try:
                 result, raw = llm.extract(doc["title"] or "", doc["raw_text"] or "", doc["source"])
@@ -51,10 +52,19 @@ def run(verbose: bool = True) -> dict:
                 )
                 touched.add(doc["id"])
                 stats["llm"] += 1
+                consec_rate_limit = 0
             except Exception as exc:  # noqa: BLE001
                 stats["llm_errors"] += 1
                 if verbose:
                     print(f"  [LLM] doc {doc['id']} failed: {exc}")
+                # If the free-tier quota is exhausted, stop instead of grinding
+                # through every remaining doc with slow back-off. Resumes next run.
+                if "429" in str(exc) or "Too Many Requests" in str(exc):
+                    consec_rate_limit += 1
+                    if consec_rate_limit >= 3:
+                        print("  [LLM] repeated rate-limit — stopping LLM pass "
+                              "for this run; remaining docs resume next run.")
+                        break
             if i < len(todo) - 1 and config.GEMINI_MIN_INTERVAL > 0:
                 time.sleep(config.GEMINI_MIN_INTERVAL)
 
