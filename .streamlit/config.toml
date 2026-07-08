@@ -1,0 +1,8 @@
+# Dark theme for the dashboard (applies locally and on Streamlit Cloud).
+[theme]
+base = "dark"
+primaryColor = "#3fb6c9"              # teal accent
+backgroundColor = "#0d1517"           # deep near-black
+secondaryBackgroundColor = "#101c1f"  # panels / sidebar
+textColor = "#e7f0f1"
+font = "sans serif"
