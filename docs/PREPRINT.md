@@ -113,6 +113,8 @@ fetch timestamp; every extraction retains the extractor name, model version,
 prompt version, and raw output. This provenance makes each analytic result
 traceable to source text and supports head-to-head comparison of extractors.
 
+![**Figure 1.** VIGIL platform architecture: collect → extract → knowledge graph → analyse → serve, with full provenance stored at extraction and analytics validated against WHO GHO/GLASS reference data.](figure1_architecture.png)
+
 ### 2.2 Data sources
 Eight source families are configured (Table 1), each accessed through public
 APIs or feeds and de-duplicated so that only new records are appended on each
@@ -249,15 +251,22 @@ interests:** none declared. **Ethics:** the platform uses only open-source,
 aggregate/public data and no individual patient data. **Author contributions:**
 YHW conceived, designed, implemented, and wrote the work.
 
-## 8. References (verify & complete before submission)
-1. WHO. Global Antimicrobial Resistance and Use Surveillance System (GLASS). https://www.who.int/initiatives/glass
-2. WHO. Epidemic Intelligence from Open Sources (EIOS). https://www.who.int/initiatives/eios
-3. Freifeld CC, et al. HealthMap. https://www.healthmap.org
-4. ProMED-mail, International Society for Infectious Diseases. https://promedmail.org
-5. MacIntyre CR, et al. EPIWATCH (UNSW). `[ref]`
-6. WHO Global Health Observatory OData API. https://www.who.int/data/gho/info/gho-odata-api
-7. NCBI E-utilities; Europe PMC RESTful API; ClinicalTrials.gov API v2.
-8. `[Add: GBD 2019 AMR burden (Murray CJL, et al., Lancet 2022); NLP/LLM for clinical/surveillance information extraction; open-LLM benchmarking.]`
+## 8. References
 
-_Figure 1. Platform architecture (collect → extract → entities/relations →
-analyse → serve). [To be generated.]_
+_Vancouver style. Entries marked `[verify]` should be checked against the
+original before submission; add the empirical AMR/NLP references noted at the end._
+
+1. Antimicrobial Resistance Collaborators. Global burden of bacterial antimicrobial resistance in 2019: a systematic analysis. Lancet. 2022;399(10325):629-655. `[verify pages]`
+2. World Health Organization. Global Antimicrobial Resistance and Use Surveillance System (GLASS) [Internet]. Geneva: WHO; [cited 2026 Jul 8]. Available from: https://www.who.int/initiatives/glass
+3. World Health Organization. Epidemic Intelligence from Open Sources (EIOS) [Internet]. Geneva: WHO; [cited 2026 Jul 8]. Available from: https://www.who.int/initiatives/eios
+4. Freifeld CC, Mandl KD, Reis BY, Brownstein JS. HealthMap: global infectious disease monitoring through automated classification and visualization of Internet media reports. J Am Med Inform Assoc. 2008;15(2):150-157. `[verify]`
+5. International Society for Infectious Diseases. ProMED-mail [Internet]. [cited 2026 Jul 8]. Available from: https://promedmail.org
+6. MacIntyre CR, et al. EPIWATCH: open-source epidemic observatory [Internet]. Sydney: UNSW; [cited 2026 Jul 8]. Available from: https://www.epiwatch.org `[verify author/title]`
+7. World Health Organization. Global Health Observatory OData API [Internet]. Geneva: WHO; [cited 2026 Jul 8]. Available from: https://www.who.int/data/gho/info/gho-odata-api
+8. National Center for Biotechnology Information. Entrez Programming Utilities (E-utilities) [Internet]. Bethesda (MD): NCBI; [cited 2026 Jul 8]. Available from: https://www.ncbi.nlm.nih.gov/books/NBK25501/
+9. Europe PMC Consortium. Europe PMC RESTful Web Service [Internet]. [cited 2026 Jul 8]. Available from: https://europepmc.org/RestfulWebService
+10. National Library of Medicine. ClinicalTrials.gov API [Internet]. Bethesda (MD): NLM; [cited 2026 Jul 8]. Available from: https://clinicaltrials.gov/data-api/api
+
+_To add before submission: 1–3 references on NLP/large-language-model information
+extraction in clinical or public-health surveillance, and on benchmarking of open
+LLMs, to support the Background and Discussion._
