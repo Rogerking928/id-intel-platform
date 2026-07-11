@@ -56,7 +56,8 @@ def run(verbose: bool = True) -> dict:
             except Exception as exc:  # noqa: BLE001
                 stats["llm_errors"] += 1
                 if verbose:
-                    print(f"  [LLM] doc {doc['id']} failed: {exc}")
+                    from analysis.trends import redact_secrets
+                    print(f"  [LLM] doc {doc['id']} failed: {redact_secrets(str(exc))}")
                 # If the free-tier quota is exhausted, stop instead of grinding
                 # through every remaining doc with slow back-off. Resumes next run.
                 if "429" in str(exc) or "Too Many Requests" in str(exc):

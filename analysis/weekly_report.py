@@ -160,8 +160,9 @@ def _inline(text: str) -> str:
 
 def generate(days: int = 7) -> dict:
     import config
-    md = build_markdown(days)
-    html = _markdown_to_html(md)
+    from analysis.trends import redact_secrets
+    md = redact_secrets(build_markdown(days))   # never write API keys into a report
+    html = redact_secrets(_markdown_to_html(md))
     stamp = date.today().isoformat()
     md_path = config.REPORTS_DIR / f"weekly_report_{stamp}.md"
     html_path = config.REPORTS_DIR / f"weekly_report_{stamp}.html"

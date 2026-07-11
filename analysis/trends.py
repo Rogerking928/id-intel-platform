@@ -147,6 +147,23 @@ def _template_narrative(facts: dict) -> str:
     return " ".join(lines)
 
 
+def redact_secrets(text: str) -> str:
+    """Strip API keys / tokens so they never land in a report or the committed DB.
+
+    A failed Gemini request raises an error whose text includes the full request
+    URL, i.e. ``...generateContent?key=AQ.<realkey>`` — writing that verbatim into
+    the weekly report leaked the key and got the daily push blocked by GitHub secret
+    scanning. Scrub any ``key=`` query param and standalone Google/GCP key tokens.
+    """
+    import re
+    if not text:
+        return text
+    text = re.sub(r"([?&]key=)[A-Za-z0-9._\-]+", r"\1REDACTED", text)   # URL ?key=...
+    text = re.sub(r"\bAIza[0-9A-Za-z_\-]{20,}\b", "REDACTED", text)      # classic Google API key
+    text = re.sub(r"\bAQ\.[0-9A-Za-z_\-]{10,}\b", "REDACTED", text)      # new GCP service-account key
+    return text
+
+
 def narrative(facts: dict) -> str:
     """LLM-written analysis if Gemini is configured, else a templated narrative."""
     from extract import llm
@@ -173,4 +190,4 @@ def narrative(facts: dict) -> str:
         resp.raise_for_status()
         return resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
     except Exception as exc:  # noqa: BLE001
-        return _template_narrative(facts) + f"\n\n(LLM narrative unavailable: {exc})"
+        return _template_narrative(facts) + f"\n\n(LLM narrative unavailable: {redact_secrets(str(exc))})"
