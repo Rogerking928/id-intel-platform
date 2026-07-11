@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "as_of": "2026-07-10",
+  "n_documents_total": 2075,
+  "n_documents_usable": 2069,
+  "n_future_dated_documents_excluded": 6,
+  "n_invalid_or_missing_dates_excluded": 0,
+  "document_year_counts": {
+    "2006": 43,
+    "2007": 88,
+    "2008": 83,
+    "2009": 120,
+    "2010": 100,
+    "2011": 107,
+    "2012": 99,
+    "2013": 142,
+    "2014": 268,
+    "2015": 178,
+    "2016": 262,
+    "2017": 141,
+    "2018": 66,
+    "2019": 3,
+    "2020": 6,
+    "2022": 7,
+    "2023": 7,
+    "2024": 54,
+    "2025": 50,
+    "2026": 245
+  },
+  "missing_document_years": [
+    2021
+  ],
+  "sparse_document_years_lt30": {
+    "2019": 3,
+    "2020": 6,
+    "2022": 7,
+    "2023": 7
+  },
+  "reference_years": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "document_reference_overlap_years": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2022,
+    2023
+  ],
+  "ready_for_longitudinal_prediction": false
+}

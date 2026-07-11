@@ -1,0 +1,151 @@
+position,document_id,url,source,event_type,stratum
+1,10,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON603,WHO,Outbreak,official-alert
+2,1873,https://pubmed.ncbi.nlm.nih.gov/42406312/,PubMed,Antimicrobial Resistance,amr-enriched
+3,1973,https://doi.org/10.21203/rs.3.rs-10068762/v1,Preprint,Antimicrobial Resistance,amr-enriched
+4,800,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308476,CDC,Outbreak,outbreak
+5,1933,https://clinicaltrials.gov/study/NCT06086626,ClinicalTrials,Clinical Trial,random-fill
+6,1953,https://www.gov.uk/government/news/rsv-maternal-vaccine-cuts-baby-hospital-admissions-by-up-to-85,UKHSA,Vaccine,official-alert
+7,1883,https://pubmed.ncbi.nlm.nih.gov/42382872/,PubMed,Antimicrobial Resistance,amr-enriched
+8,1951,https://www.gov.uk/government/news/new-hiv-report-shows-progress-but-inequalities-persist-in-access-to-testing-prep-and-early-diagnosis,UKHSA,Research Article,official-alert
+9,7,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON606,WHO,Outbreak,official-alert
+10,1945,https://www.gov.uk/government/news/free-flu-jabs-for-people-experiencing-homelessness,UKHSA,Vaccine,official-alert
+11,1942,https://www.gov.uk/government/publications/meningococcal-b-menb-time-limited-vaccination-offer-letter,UKHSA,Vaccine,official-alert
+12,362,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=298251,CDC,Outbreak,outbreak
+13,6,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON607,WHO,Outbreak,official-alert
+14,1927,https://clinicaltrials.gov/study/NCT05568654,ClinicalTrials,Clinical Trial,random-fill
+15,1950,https://www.gov.uk/government/news/ukhsa-and-partners-publish-first-one-health-annual-vector-borne-disease-surveillance-report,UKHSA,Research Article,official-alert
+16,1761,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=309117,CDC,Antimicrobial Resistance,amr-enriched
+17,1842,https://www.ecdc.europa.eu/en/publications-data/communicable-disease-threats-report-30-may-5-june-2026-week-23,ECDC,Research Article,official-alert
+18,1431,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308775,CDC,Outbreak,outbreak
+19,259,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=337270,CDC,Outbreak,outbreak
+20,1962,https://doi.org/10.64898/2025.12.27.25343078,Preprint,Antimicrobial Resistance,random-fill
+21,2058,https://doi.org/10.64898/2026.06.09.731159,Preprint,Antimicrobial Resistance,random-fill
+22,936,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308622,CDC,Antimicrobial Resistance,amr-enriched
+23,703,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308217,CDC,Antimicrobial Resistance,amr-enriched
+24,1960,https://doi.org/10.64898/2026.07.05.736378,Preprint,Antimicrobial Resistance,amr-enriched
+25,1046,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308735,CDC,Research Article,random-fill
+26,5,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON608,WHO,Outbreak,official-alert
+27,332,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=305935,CDC,Outbreak,outbreak
+28,2032,https://doi.org/10.64898/2026.06.01.729472,Preprint,Antimicrobial Resistance,amr-enriched
+29,1987,https://doi.org/10.64898/2026.05.08.26352429,Preprint,Antimicrobial Resistance,amr-enriched
+30,1839,https://www.ecdc.europa.eu/en/publications-data/communicable-disease-threats-report-27-june-3-july-2026-week-27,ECDC,Research Article,official-alert
+31,1995,https://doi.org/10.21203/rs.3.rs-9510282/v1,Preprint,Antimicrobial Resistance,amr-enriched
+32,278,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=331785,CDC,Outbreak,outbreak
+33,1939,https://www.gov.uk/government/news/ukhsa-update-on-the-hantavirus-cruise-ship-outbreak,UKHSA,Outbreak,official-alert
+34,2004,https://doi.org/10.64898/2026.04.24.720744,Preprint,Antimicrobial Resistance,amr-enriched
+35,1958,https://pubmed.ncbi.nlm.nih.gov/42416888/,PubMed,Antimicrobial Resistance,amr-enriched
+36,1908,https://clinicaltrials.gov/study/NCT07364435,ClinicalTrials,Clinical Trial,random-fill
+37,1432,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308776,CDC,Outbreak,outbreak
+38,2983,https://pubmed.ncbi.nlm.nih.gov/33248392/,PubMed,,random-fill
+39,1293,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=307807,CDC,Research Article,random-fill
+40,1938,https://www.gov.uk/government/news/vaccine-schedule-change-helps-protect-babies-earlier-against-meningitis-b,UKHSA,Vaccine,official-alert
+41,1865,https://pubmed.ncbi.nlm.nih.gov/42412212/,PubMed,Antimicrobial Resistance,amr-enriched
+42,2016,https://doi.org/10.64898/2026.06.25.731849,Preprint,Antimicrobial Resistance,amr-enriched
+43,4,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON610,WHO,Outbreak,official-alert
+44,1025,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=322933,CDC,Antimicrobial Resistance,amr-enriched
+45,1841,https://www.ecdc.europa.eu/en/publications-data/reporting-protocol-integrated-respiratory-virus-surveillance,ECDC,Research Article,official-alert
+46,680,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308188,CDC,Antimicrobial Resistance,amr-enriched
+47,2,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON611,WHO,Outbreak,official-alert
+48,1211,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=307720,CDC,Antimicrobial Resistance,amr-enriched
+49,1948,https://www.gov.uk/government/news/stis-fall-with-syphilis-among-gay-and-bisexual-men-lowest-in-a-decade,UKHSA,Research Article,official-alert
+50,14,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=765898,CDC,Outbreak,outbreak
+51,1496,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308846,CDC,Research Article,random-fill
+52,1952,https://www.gov.uk/government/news/antibiotics-and-menb-vaccination-to-be-offered-to-young-people-in-dorset,UKHSA,Vaccine,official-alert
+53,1562,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308915,CDC,Outbreak,outbreak
+54,3,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON609,WHO,Outbreak,official-alert
+55,1912,https://clinicaltrials.gov/study/NCT05715619,ClinicalTrials,Clinical Trial,random-fill
+56,2005,https://doi.org/10.22541/au.173728151.10504023/v1,Preprint,Antimicrobial Resistance,amr-enriched
+57,1180,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308439,CDC,Antimicrobial Resistance,amr-enriched
+58,2059,https://doi.org/10.64898/2026.06.04.730223,Preprint,Antimicrobial Resistance,amr-enriched
+59,1947,https://www.gov.uk/government/publications/national-flu-immunisation-programme-plan-2026-to-2027,UKHSA,Vaccine,official-alert
+60,451,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=307950,CDC,Antimicrobial Resistance,amr-enriched
+61,2022,https://doi.org/10.64898/2026.06.13.732091,Preprint,Antimicrobial Resistance,amr-enriched
+62,2033,https://doi.org/10.64898/2025.12.05.25341703,Preprint,Antimicrobial Resistance,amr-enriched
+63,4573,https://pubmed.ncbi.nlm.nih.gov/38131168/,PubMed,,random-fill
+64,1885,https://pubmed.ncbi.nlm.nih.gov/42415201/,PubMed,Antimicrobial Resistance,amr-enriched
+65,1100,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308354,CDC,Antimicrobial Resistance,amr-enriched
+66,1530,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308883,CDC,Vaccine,random-fill
+67,2130,https://pubmed.ncbi.nlm.nih.gov/33479609/,PubMed,,random-fill
+68,1859,https://pubmed.ncbi.nlm.nih.gov/42402423/,PubMed,Antimicrobial Resistance,amr-enriched
+69,118,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=752371,CDC,Outbreak,outbreak
+70,281,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=330592,CDC,Outbreak,outbreak
+71,1840,https://www.ecdc.europa.eu/en/publications-data/communicable-disease-threats-report-19-26-june-2026-week-26,ECDC,Research Article,official-alert
+72,54,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=763159,CDC,Outbreak,outbreak
+73,2109,https://pubmed.ncbi.nlm.nih.gov/31913060/,PubMed,,random-fill
+74,343,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=304855,CDC,Antimicrobial Resistance,amr-enriched
+75,9,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON604,WHO,Outbreak,official-alert
+76,2042,https://doi.org/10.64898/2026.02.12.26346186,Preprint,Antimicrobial Resistance,amr-enriched
+77,2006,https://doi.org/10.21203/rs.3.rs-8857783/v1,Preprint,Antimicrobial Resistance,amr-enriched
+78,1848,https://www.ecdc.europa.eu/en/publications-data/communicable-disease-threats-report-2-8-may-2026-week-19,ECDC,Research Article,official-alert
+79,1877,https://pubmed.ncbi.nlm.nih.gov/42406015/,PubMed,Antimicrobial Resistance,amr-enriched
+80,693,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308205,CDC,Outbreak,outbreak
+81,2898,https://pubmed.ncbi.nlm.nih.gov/33585611/,PubMed,,random-fill
+82,1937,https://www.gov.uk/government/news/nearly-400-antibiotic-resistant-infections-each-week-in-2024,UKHSA,Antimicrobial Resistance,official-alert
+83,2045,https://doi.org/10.64898/2026.03.16.26348538,Preprint,Antimicrobial Resistance,random-fill
+84,1978,https://doi.org/10.21203/rs.3.rs-9915387/v1,Preprint,Antimicrobial Resistance,amr-enriched
+85,1847,https://www.ecdc.europa.eu/en/publications-data/standard-laboratory-protocols-sars-cov-2-characterisation,ECDC,Research Article,official-alert
+86,2049,https://doi.org/10.64898/2026.03.20.26348892,Preprint,Antimicrobial Resistance,amr-enriched
+87,8,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON605,WHO,Outbreak,official-alert
+88,1949,https://www.gov.uk/government/news/salmonella-cases-in-england-at-a-decade-high,UKHSA,Research Article,official-alert
+89,635,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308143,CDC,Outbreak,outbreak
+90,2052,https://doi.org/10.64898/2026.06.19.733372,Preprint,Antimicrobial Resistance,random-fill
+91,712,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308228,CDC,Outbreak,outbreak
+92,1936,https://www.gov.uk/government/publications/rsv-vaccination-expansion-of-eligibility-to-older-adults-in-certain-clinical-risk-groups,UKHSA,Vaccine,official-alert
+93,2039,https://doi.org/10.64898/2026.01.06.25342561,Preprint,Antimicrobial Resistance,random-fill
+94,342,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=304908,CDC,Outbreak,outbreak
+95,497,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308000,CDC,Outbreak,outbreak
+96,1844,https://www.ecdc.europa.eu/en/news-events/ecdc-hosts-annual-meeting-european-respiratory-viruses-network,ECDC,Research Article,official-alert
+97,2019,https://doi.org/10.21203/rs.3.rs-10064482/v1,Preprint,Antimicrobial Resistance,random-fill
+98,1935,https://www.gov.uk/government/news/ukhsa-updates-heat-health-alerts-across-england,UKHSA,Research Article,official-alert
+99,1904,https://clinicaltrials.gov/study/NCT06717594,ClinicalTrials,Clinical Trial,amr-enriched
+100,2055,https://doi.org/10.21203/rs.3.rs-9975114/v1,Preprint,Outbreak,random-fill
+101,569,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308077,CDC,Antimicrobial Resistance,amr-enriched
+102,988,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308676,CDC,Outbreak,outbreak
+103,3589,https://pubmed.ncbi.nlm.nih.gov/36301096/,PubMed,,random-fill
+104,273,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=333426,CDC,Outbreak,outbreak
+105,1946,https://www.gov.uk/government/news/ukhsa-publishes-first-health-security-risk-assessment-in-boost-to-pandemic-preparedness,UKHSA,Research Article,official-alert
+106,2046,https://doi.org/10.64898/2026.03.16.26348525,Preprint,Antimicrobial Resistance,amr-enriched
+107,2883,https://pubmed.ncbi.nlm.nih.gov/33934810/,PubMed,,random-fill
+108,1981,https://doi.org/10.12688/wellcomeopenres.26506.1,Preprint,Antimicrobial Resistance,amr-enriched
+109,2056,https://doi.org/10.21203/rs.3.rs-9898928/v1,Preprint,Antimicrobial Resistance,amr-enriched
+110,4496,https://pubmed.ncbi.nlm.nih.gov/38242705/,PubMed,,random-fill
+111,2037,https://doi.org/10.64898/2025.12.29.25343130,Preprint,Antimicrobial Resistance,amr-enriched
+112,1905,https://clinicaltrials.gov/study/NCT05750966,ClinicalTrials,Clinical Trial,random-fill
+113,1941,https://www.gov.uk/government/news/uk-public-health-rapid-support-team-deploys-in-response-to-the-ebola-outbreak,UKHSA,Outbreak,official-alert
+114,1944,https://www.gov.uk/government/news/latest-measles-figures-published-as-two-deaths-confirmed-in-2026,UKHSA,Outbreak,official-alert
+115,1519,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308872,CDC,Vaccine,random-fill
+116,2015,https://doi.org/10.20944/preprints202606.2185.v1,Preprint,Antimicrobial Resistance,amr-enriched
+117,1890,https://pubmed.ncbi.nlm.nih.gov/42412955/,PubMed,Antimicrobial Resistance,amr-enriched
+118,1943,https://www.gov.uk/government/news/thousands-of-young-people-to-be-offered-two-dose-menb-vaccine,UKHSA,Vaccine,official-alert
+119,1867,https://pubmed.ncbi.nlm.nih.gov/42412077/,PubMed,Antimicrobial Resistance,amr-enriched
+120,2040,https://doi.org/10.64898/2026.01.20.26344437,Preprint,Antimicrobial Resistance,amr-enriched
+121,993,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308681,CDC,Outbreak,outbreak
+122,1219,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=307729,CDC,Outbreak,outbreak
+123,803,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308479,CDC,Research Article,random-fill
+124,1,https://www.who.int/emergencies/disease-outbreak-news/item/2026-DON612,WHO,Outbreak,official-alert
+125,1918,https://clinicaltrials.gov/study/NCT04171817,ClinicalTrials,Clinical Trial,random-fill
+126,506,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308011,CDC,Emerging Pathogen,random-fill
+127,1843,https://www.ecdc.europa.eu/en/publications-data/communicable-disease-threats-report-23-29-may-2026-week-22,ECDC,Research Article,official-alert
+128,1940,https://www.gov.uk/government/news/joint-statement-on-asbestos-in-consumer-products,UKHSA,Research Article,official-alert
+129,2020,https://doi.org/10.64898/2026.06.18.732922,Preprint,Antimicrobial Resistance,amr-enriched
+130,2041,https://doi.org/10.64898/2026.01.23.26344687,Preprint,Antimicrobial Resistance,amr-enriched
+131,669,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308177,CDC,Research Article,random-fill
+132,1645,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=309001,CDC,Antimicrobial Resistance,amr-enriched
+133,1909,https://clinicaltrials.gov/study/NCT05835206,ClinicalTrials,Clinical Trial,random-fill
+134,1954,https://www.gov.uk/government/news/new-ukhsa-data-shows-1504-heat-related-deaths-during-summer-of-2025,UKHSA,Research Article,official-alert
+135,407,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=283161,CDC,Outbreak,outbreak
+136,1845,https://www.ecdc.europa.eu/en/publications-data/communicable-disease-threats-report-14-22-may-2026-week-21,ECDC,Outbreak,official-alert
+137,2066,https://doi.org/10.64898/2026.02.03.703534,Preprint,Outbreak,random-fill
+138,616,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308124,CDC,Antimicrobial Resistance,amr-enriched
+139,31,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=765571,CDC,Outbreak,outbreak
+140,3441,https://pubmed.ncbi.nlm.nih.gov/36513320/,PubMed,,random-fill
+141,1676,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=309032,CDC,Vaccine,random-fill
+142,1980,https://doi.org/10.21203/rs.3.rs-9442635/v1,Preprint,Antimicrobial Resistance,amr-enriched
+143,195,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=373011,CDC,Outbreak,outbreak
+144,1906,https://clinicaltrials.gov/study/NCT03471221,ClinicalTrials,Clinical Trial,random-fill
+145,498,https://tools.cdc.gov/api/embed/downloader/download.asp?m=132608&c=308001,CDC,Outbreak,outbreak
+146,2027,https://doi.org/10.21203/rs.3.rs-9729667/v1,Preprint,Antimicrobial Resistance,amr-enriched
+147,1846,https://www.ecdc.europa.eu/en/publications-data/weekly-respiratory-virus-update-week-20-may-2026,ECDC,Research Article,official-alert
+148,2011,https://doi.org/10.64898/2025.11.30.25341325,Preprint,Antimicrobial Resistance,amr-enriched
+149,1992,https://doi.org/10.64898/2026.03.04.26347163,Preprint,Antimicrobial Resistance,amr-enriched
+150,2002,https://doi.org/10.64898/2026.03.26.714403,Preprint,Antimicrobial Resistance,random-fill

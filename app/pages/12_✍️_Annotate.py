@@ -16,6 +16,7 @@ from common import page_setup  # noqa: E402
 import db  # noqa: E402
 from extract import dictionaries as dic  # noqa: E402
 from extract.dictionaries import canonical_country  # noqa: E402
+from analysis import gold_sample  # noqa: E402
 
 page_setup("Annotate", "✍️")
 st.title("✍️ Gold-standard Annotation")
@@ -40,15 +41,28 @@ if not annotator.strip():
     st.stop()
 
 # --- document picker ---------------------------------------------------------
-with db.get_conn() as conn:
-    docs = [dict(r) for r in conn.execute(
-        "SELECT id, source, title FROM documents ORDER BY id").fetchall()]
-done = db.annotated_document_ids(annotator)
+gold_ids = gold_sample.load_ids()
 c1, c2 = st.columns([3, 1])
+only_gold = c2.checkbox("Gold sample only", value=bool(gold_ids),
+                        help="Restrict to the frozen benchmark set (docs/gold_sample.csv). "
+                             "Both annotators must label this same set for kappa.")
 hide_done = c2.checkbox("Hide done", value=True)
+with db.get_conn() as conn:
+    all_docs = {r["id"]: dict(r) for r in conn.execute(
+        "SELECT id, source, title FROM documents").fetchall()}
+if only_gold and gold_ids:
+    docs = [all_docs[i] for i in gold_ids if i in all_docs]  # frozen benchmark order
+else:
+    docs = [all_docs[i] for i in sorted(all_docs)]
+if only_gold and not gold_ids:
+    st.warning("No gold sample found. Build it once with "
+               "`python -m analysis.gold_sample`, then reload.")
+done = db.annotated_document_ids(annotator)
+done_in_scope = sum(1 for d in docs if d["id"] in done)
 pool = [d for d in docs if not (hide_done and d["id"] in done)]
-st.progress(len(done) / len(docs) if docs else 0,
-            text=f"Annotated by you: {len(done)} / {len(docs)} documents")
+scope = "gold sample" if (only_gold and gold_ids) else "all documents"
+st.progress(done_in_scope / len(docs) if docs else 0,
+            text=f"Annotated by you: {done_in_scope} / {len(docs)} ({scope})")
 if not pool:
     st.success("Nothing left to annotate in this view. Uncheck 'Hide done' to review.")
     st.stop()

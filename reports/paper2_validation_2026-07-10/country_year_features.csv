@@ -1,0 +1,149 @@
+year,country,iso3,total_docs,amr_docs,amr_share
+2006,United States,USA,7,0,0.0
+2007,China,CHN,1,0,0.0
+2007,United Kingdom,GBR,1,0,0.0
+2007,United States,USA,13,0,0.0
+2008,China,CHN,1,0,0.0
+2008,Israel,ISR,1,0,0.0
+2008,Mexico,MEX,1,0,0.0
+2008,United States,USA,11,0,0.0
+2009,Canada,CAN,1,0,0.0
+2009,South Africa,ZAF,1,0,0.0
+2009,United Kingdom,GBR,1,0,0.0
+2009,United States,USA,17,0,0.0
+2010,China,CHN,1,0,0.0
+2010,India,IND,1,0,0.0
+2010,Poland,POL,1,0,0.0
+2010,Turkey,TUR,1,0,0.0
+2010,United States,USA,17,0,0.0
+2010,Vietnam,VNM,1,0,0.0
+2011,Germany,DEU,1,0,0.0
+2011,United Kingdom,GBR,1,0,0.0
+2011,United States,USA,22,0,0.0
+2012,Kenya,KEN,1,0,0.0
+2012,Peru,PER,1,0,0.0
+2012,South Africa,ZAF,1,0,0.0
+2012,United Kingdom,GBR,2,0,0.0
+2012,United States,USA,19,0,0.0
+2013,Australia,AUS,1,0,0.0
+2013,Belgium,BEL,1,0,0.0
+2013,France,FRA,1,0,0.0
+2013,Germany,DEU,1,0,0.0
+2013,Netherlands,NLD,1,0,0.0
+2013,Pakistan,PAK,1,0,0.0
+2013,Portugal,PRT,1,0,0.0
+2013,Spain,ESP,1,0,0.0
+2013,United Kingdom,GBR,2,0,0.0
+2013,United States,USA,28,0,0.0
+2014,Belgium,BEL,1,0,0.0
+2014,China,CHN,1,0,0.0
+2014,India,IND,1,0,0.0
+2014,Nigeria,NGA,2,0,0.0
+2014,Saudi Arabia,SAU,5,0,0.0
+2014,Uganda,UGA,1,0,0.0
+2014,United Kingdom,GBR,1,0,0.0
+2014,United States,USA,74,0,0.0
+2014,Vietnam,VNM,1,0,0.0
+2015,China,CHN,1,0,0.0
+2015,United Kingdom,GBR,1,0,0.0
+2015,United States,USA,33,0,0.0
+2016,Argentina,ARG,1,0,0.0
+2016,Brazil,BRA,5,0,0.0
+2016,Canada,CAN,1,0,0.0
+2016,Colombia,COL,3,0,0.0
+2016,Mexico,MEX,1,0,0.0
+2016,Nigeria,NGA,1,0,0.0
+2016,Peru,PER,1,0,0.0
+2016,Philippines,PHL,1,0,0.0
+2016,Russia,RUS,1,0,0.0
+2016,Singapore,SGP,1,0,0.0
+2016,South Africa,ZAF,1,0,0.0
+2016,Uganda,UGA,1,0,0.0
+2016,United States,USA,22,2,0.09090909090909091
+2017,South Africa,ZAF,1,0,0.0
+2017,Uganda,UGA,1,0,0.0
+2017,United Kingdom,GBR,2,0,0.0
+2017,United States,USA,16,0,0.0
+2018,Brazil,BRA,3,0,0.0
+2018,Democratic Republic of the Congo,COD,1,0,0.0
+2018,Turkey,TUR,1,0,0.0
+2018,Uganda,UGA,1,0,0.0
+2018,United States,USA,3,0,0.0
+2019,Switzerland,CHE,1,1,1.0
+2019,United States,USA,1,0,0.0
+2020,Belgium,BEL,1,0,0.0
+2020,Russia,RUS,1,0,0.0
+2020,Spain,ESP,1,0,0.0
+2020,Thailand,THA,1,0,0.0
+2020,United States,USA,1,1,1.0
+2022,Australia,AUS,1,0,0.0
+2022,Canada,CAN,1,0,0.0
+2022,France,FRA,1,0,0.0
+2022,Germany,DEU,1,0,0.0
+2022,Israel,ISR,1,0,0.0
+2022,Japan,JPN,1,0,0.0
+2022,Netherlands,NLD,1,0,0.0
+2022,New Zealand,NZL,1,0,0.0
+2022,Singapore,SGP,1,0,0.0
+2022,South Africa,ZAF,1,0,0.0
+2022,Sweden,SWE,1,0,0.0
+2022,United Kingdom,GBR,1,0,0.0
+2022,United States,USA,3,0,0.0
+2023,Italy,ITA,2,1,0.5
+2023,Netherlands,NLD,1,0,0.0
+2023,Spain,ESP,1,1,1.0
+2023,United States,USA,3,2,0.6666666666666666
+2024,Australia,AUS,1,1,1.0
+2024,Canada,CAN,1,1,1.0
+2024,Hong Kong,HKG,1,0,0.0
+2024,South Africa,ZAF,1,0,0.0
+2024,Taiwan,TWN,1,0,0.0
+2024,Turkey,TUR,1,1,1.0
+2024,Uganda,UGA,1,0,0.0
+2024,United States,USA,11,0,0.0
+2025,Ethiopia,ETH,1,0,0.0
+2025,France,FRA,2,0,0.0
+2025,India,IND,1,1,1.0
+2025,Kenya,KEN,1,0,0.0
+2025,Tanzania,TZA,2,1,0.5
+2025,United States,USA,2,0,0.0
+2026,Argentina,ARG,2,0,0.0
+2026,Australia,AUS,1,0,0.0
+2026,Bangladesh,BGD,3,1,0.3333333333333333
+2026,Brazil,BRA,5,1,0.2
+2026,Canada,CAN,4,2,0.5
+2026,Chile,CHL,2,0,0.0
+2026,China,CHN,6,1,0.16666666666666666
+2026,Colombia,COL,1,0,0.0
+2026,Democratic Republic of the Congo,COD,14,0,0.0
+2026,Egypt,EGY,3,2,0.6666666666666666
+2026,Ethiopia,ETH,1,1,1.0
+2026,France,FRA,4,2,0.5
+2026,Germany,DEU,3,1,0.3333333333333333
+2026,Ghana,GHA,3,0,0.0
+2026,Greece,GRC,1,1,1.0
+2026,India,IND,1,0,0.0
+2026,Indonesia,IDN,1,1,1.0
+2026,Iraq,IRQ,1,1,1.0
+2026,Ireland,IRL,1,0,0.0
+2026,Japan,JPN,1,1,1.0
+2026,Malaysia,MYS,1,0,0.0
+2026,Mexico,MEX,2,1,0.5
+2026,Nepal,NPL,1,0,0.0
+2026,Netherlands,NLD,2,0,0.0
+2026,Nigeria,NGA,3,0,0.0
+2026,Pakistan,PAK,2,2,1.0
+2026,Peru,PER,1,0,0.0
+2026,Philippines,PHL,1,0,0.0
+2026,Saudi Arabia,SAU,1,1,1.0
+2026,Singapore,SGP,1,0,0.0
+2026,South Africa,ZAF,3,0,0.0
+2026,South Korea,KOR,3,4,1.3333333333333333
+2026,Spain,ESP,2,1,0.5
+2026,Taiwan,TWN,1,1,1.0
+2026,Thailand,THA,1,0,0.0
+2026,Uganda,UGA,18,1,0.05555555555555555
+2026,United Arab Emirates,ARE,1,0,0.0
+2026,United Kingdom,GBR,9,0,0.0
+2026,United States,USA,12,4,0.3333333333333333
+2026,Vietnam,VNM,1,1,1.0

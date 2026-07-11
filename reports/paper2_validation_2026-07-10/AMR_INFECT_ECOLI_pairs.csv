@@ -1,0 +1,21 @@
+year,country,iso3,total_docs,amr_docs,amr_share,reference_country,value
+2016,Philippines,PHL,1,0,0.0,Philippines,38.02
+2017,Uganda,UGA,1,0,0.0,Uganda,46.15
+2017,United Kingdom,GBR,2,0,0.0,United Kingdom,10.26
+2018,Brazil,BRA,3,0,0.0,Brazil,15.9
+2019,Switzerland,CHE,1,1,1.0,Switzerland,10.27
+2020,Belgium,BEL,1,0,0.0,Belgium,10.33
+2020,Russia,RUS,1,0,0.0,Russia,73.17
+2020,Thailand,THA,1,0,0.0,Thailand,39.4
+2022,Australia,AUS,1,0,0.0,Australia,12.68
+2022,Canada,CAN,1,0,0.0,Canada,23.36
+2022,France,FRA,1,0,0.0,France,9.13
+2022,Germany,DEU,1,0,0.0,Germany,9.41
+2022,Japan,JPN,1,0,0.0,Japan,20.39
+2022,Netherlands,NLD,1,0,0.0,Netherlands,7.61
+2022,Singapore,SGP,1,0,0.0,Singapore,25.53
+2022,South Africa,ZAF,1,0,0.0,South Africa,30.04
+2022,Sweden,SWE,1,0,0.0,Sweden,7.31
+2022,United Kingdom,GBR,1,0,0.0,United Kingdom,11.41
+2023,Italy,ITA,2,1,0.5,Italy,29.98
+2023,Netherlands,NLD,1,0,0.0,Netherlands,8.14
