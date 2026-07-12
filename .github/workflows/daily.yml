@@ -2,6 +2,11 @@
 # own computer is off. It collects new data, runs AI extraction, and commits
 # the refreshed database back to the repo so the public Streamlit site updates.
 #
+# Reliability note: GitHub's free scheduler often delays or silently DROPS a
+# scheduled run under load, so a single daily trigger sometimes misses a day.
+# To avoid that we schedule THREE off-peak attempts per day; a built-in guard
+# makes the later attempts skip cheaply if the day was already updated.
+#
 # Setup (one-time):
 #   1. Push this project to a GitHub repository.
 #   2. In the repo: Settings -> Secrets and variables -> Actions -> New secret
@@ -12,7 +17,11 @@ name: daily-update
 
 on:
   schedule:
-    - cron: "0 23 * * *"   # 23:00 UTC = 07:00 Taiwan time, every day
+    # Off-round minutes (:17) avoid GitHub's congested top-of-hour queue.
+    # Three attempts/day so a delayed or dropped run still gets covered.
+    - cron: "17 23 * * *"   # 23:17 UTC = 07:17 Taiwan — primary
+    - cron: "17 3 * * *"    # 03:17 UTC = 11:17 Taiwan — backup 1
+    - cron: "17 9 * * *"    # 09:17 UTC = 17:17 Taiwan — backup 2
   workflow_dispatch: {}      # lets you run it manually from the Actions tab
 
 # allow the job to push the updated database back to the repo
@@ -30,15 +39,35 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      # Backup runs skip if today (UTC) was already updated. Manual runs
+      # (workflow_dispatch) always proceed, so you can force an update.
+      - name: Skip if already updated today
+        id: guard
+        run: |
+          today=$(date -u +%F)
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Manual/other trigger — will run."
+          elif git log -1 --pretty=%s | grep -q "daily data update ($today)"; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Already updated for $today — this backup run will skip."
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Not yet updated for $today — will run."
+          fi
+
       - name: Set up Python
+        if: steps.guard.outputs.run == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install dependencies
+        if: steps.guard.outputs.run == 'true'
         run: pip install -r requirements.txt
 
       - name: Run daily collection + AI extraction + weekly report
+        if: steps.guard.outputs.run == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-2.5-flash
@@ -48,6 +77,7 @@ jobs:
         run: python run_daily.py --report
 
       - name: Commit refreshed database + report
+        if: steps.guard.outputs.run == 'true'
         run: |
           git config user.name  "id-intel-bot"
           git config user.email "actions@github.com"
