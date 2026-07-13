@@ -2,26 +2,30 @@
 # own computer is off. It collects new data, runs AI extraction, and commits
 # the refreshed database back to the repo so the public Streamlit site updates.
 #
-# Reliability note: GitHub's free scheduler often delays or silently DROPS a
-# scheduled run under load, so a single daily trigger sometimes misses a day.
-# To avoid that we schedule THREE off-peak attempts per day; a built-in guard
-# makes the later attempts skip cheaply if the day was already updated.
+# Reliability note: GitHub's free scheduler is "best effort" — it often delays
+# or silently DROPS scheduled runs under load, so a couple of daily triggers
+# aren't enough (we saw 2 of 3 dropped on the same day). Fix: try MANY times a
+# day (every 2 hours) and let a built-in guard make every attempt after the
+# day's first successful update skip in a few seconds — no pip install, no AI
+# calls, no wasted Gemini quota. This repo is public, so GitHub Actions minutes
+# are free and unlimited, making the extra attempts effectively cost-nothing.
+# Net effect: for GitHub to miss a whole day it would have to drop ~12 runs in
+# a row, which practically never happens — so the site updates itself.
 #
 # Setup (one-time):
 #   1. Push this project to a GitHub repository.
 #   2. In the repo: Settings -> Secrets and variables -> Actions -> New secret
 #        Name:  GEMINI_API_KEY     Value: <your Gemini key>
-#   3. That's it. It runs every day on the schedule below; you can also trigger
+#   3. That's it. It self-updates on the schedule below; you can also trigger
 #      it by hand from the repo's "Actions" tab ("Run workflow").
 name: daily-update
 
 on:
   schedule:
-    # Off-round minutes (:17) avoid GitHub's congested top-of-hour queue.
-    # Three attempts/day so a delayed or dropped run still gets covered.
-    - cron: "17 23 * * *"   # 23:17 UTC = 07:17 Taiwan — primary
-    - cron: "17 3 * * *"    # 03:17 UTC = 11:17 Taiwan — backup 1
-    - cron: "17 9 * * *"    # 09:17 UTC = 17:17 Taiwan — backup 2
+    # Try every 2 hours at an off-round minute (:17 avoids GitHub's congested
+    # top-of-hour queue). The guard below makes all attempts after the day's
+    # first update skip cheaply, so this is many chances but only one real run.
+    - cron: "17 */2 * * *"
   workflow_dispatch: {}      # lets you run it manually from the Actions tab
 
 # allow the job to push the updated database back to the repo
@@ -39,8 +43,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # Backup runs skip if today (UTC) was already updated. Manual runs
-      # (workflow_dispatch) always proceed, so you can force an update.
+      # Every scheduled attempt after today's update already landed skips here
+      # in seconds. Manual runs (workflow_dispatch) always proceed so you can
+      # force an update whenever you want.
       - name: Skip if already updated today
         id: guard
         run: |
@@ -50,7 +55,7 @@ jobs:
             echo "Manual/other trigger — will run."
           elif git log -1 --pretty=%s | grep -q "daily data update ($today)"; then
             echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Already updated for $today — this backup run will skip."
+            echo "Already updated for $today — this attempt will skip."
           else
             echo "run=true" >> "$GITHUB_OUTPUT"
             echo "Not yet updated for $today — will run."
